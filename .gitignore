@@ -1,0 +1,42 @@
+# ── LaTeX artifacts ────────────────────────────────────────
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.toc
+*.synctex.gz
+*.synctex\(busy\)
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+
+# ── OS / editor ────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Python ─────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# ── Archivos de medios del Desktop (no son del proyecto) ───
+*.mov
+*.mp4
+"Screenshot*"

@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analítica Predictiva para Deserción Estudiantil — ETITC PI-II</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" type="module"></script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div id="scrollProgress"></div>
+
+<!-- Chapter nav -->
+<nav id="chapterNav" aria-label="Navegación por capítulos">
+  <div class="nav-dot active" title="Inicio"></div>
+  <div class="nav-dot" title="Problemática"></div>
+  <div class="nav-dot" title="Usuarios"></div>
+  <div class="nav-dot" title="Datos Sintéticos"></div>
+  <div class="nav-dot" title="Modelo"></div>
+  <div class="nav-dot" title="Resultados"></div>
+  <div class="nav-dot" title="Conclusiones"></div>
+</nav>
+
+<!-- Theme toggle -->
+<button id="themeToggle" aria-label="Cambiar tema">
+  <i class="ph-bold ph-moon"></i>
+</button>
+
+<main>
+
+  <!-- ──────────────── HERO ──────────────── -->
+  <section id="hero" data-chapter="1">
+    <div class="hero-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="container">
+      <div class="hero-inner">
+
+        <div class="hero-badge fade-in">
+          <i class="ph-fill ph-graduation-cap"></i>
+          ETITC · Jornada Nocturna · PI-II · 2025-2
+        </div>
+
+        <h1 class="hero-title fade-in">
+          Analítica Predictiva para Detección Temprana de
+          <span class="highlight">Riesgo de Deserción</span>
+          Estudiantil
+        </h1>
+
+        <p class="hero-sub fade-in">
+          Pipeline de Machine Learning que integra datos académicos dinámicos
+          con el perfil socioeconómico del estudiante nocturno para emitir
+          alertas tempranas hacia Bienestar Universitario.
+        </p>
+
+        <div class="hero-authors fade-in">
+          <span class="author-tag">
+            <i class="ph-fill ph-user-circle"></i>
+            Jhon Alejandro Correal Martínez
+          </span>
+          <span class="author-tag">
+            <i class="ph-fill ph-user-circle"></i>
+            Rafael Andrés Guzmán Rodríguez
+          </span>
+          <span class="author-tag">
+            <i class="ph-fill ph-chalkboard-teacher"></i>
+            Doris Constanza Alvarado Mariño
+          </span>
+        </div>
+
+        <div class="hero-stats fade-in">
+          <div class="stat-item">
+            <span class="stat-value">1 000</span>
+            <span class="stat-label">Estudiantes sintéticos</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">24</span>
+            <span class="stat-label">Variables explicativas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">95.0%</span>
+            <span class="stat-label">Accuracy (RF)</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">TRL 2/3</span>
+            <span class="stat-label">Nivel tecnológico</span>
+          </div>
+        </div>
+
+        <div class="hero-actions fade-in">
+          <a href="../main.pdf" download="Anteproyecto_PI2_ETITC.pdf" class="hero-download-btn">
+            <i class="ph-bold ph-file-pdf"></i>
+            Descargar Anteproyecto
+            <span class="hero-download-sub">main.pdf · LaTeX compilado</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── CHAPTER 01 ──────────────── -->
+  <div class="chapter-break" data-chapter="2" data-num="01">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">01</div>
+      <h2 class="cb-title">La <span class="highlight">Problemática</span></h2>
+      <p class="cb-sub">Por qué la deserción nocturna en ingeniería es una crisis silenciosa y qué brechas tecnológicas la perpetúan.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── PROBLEMÁTICA ──────────────── -->
+  <section class="section" id="problematica">
+    <div class="container">
+      <h2 class="section-title fade-in">El <span class="highlight">contexto</span> institucional</h2>
+      <p class="section-subtitle fade-in">
+        La ETITC Sede Centro registra una tasa de deserción anual del 12.05%.
+        El PDI 2025-2032 exige reducirla 2.5 puntos porcentuales, pero el sistema
+        vigente de alerta carece de la integración de datos necesaria para lograrlo.
+      </p>
+
+      <div class="problem-grid">
+        <div>
+          <p class="problem-statement fade-in">
+            Los estudiantes nocturnos de ingeniería enfrentan una doble carga: jornadas
+            laborales activas (67.8% trabaja) combinadas con exigencias académicas en
+            ciencias básicas. Esta tensión no es visible en el sistema Adviser V.11
+            hasta que el estudiante ya ha reprobado o abandonado.
+          </p>
+
+          <div class="stat-cards fade-in">
+            <div class="stat-card">
+              <span class="big-num">12.05%</span>
+              <span class="small-label">Deserción anual — PDI ETITC 2025-2032</span>
+            </div>
+            <div class="stat-card">
+              <span class="big-num">~68%</span>
+              <span class="small-label">Estudiantes con empleo activo¹</span>
+            </div>
+            <div class="stat-card">
+              <span class="big-num">~45%</span>
+              <span class="small-label">Debilidad en matemáticas¹</span>
+            </div>
+            <div class="stat-card">
+              <span class="big-num">~28%</span>
+              <span class="small-label">Inseguridad alimentaria¹</span>
+            </div>
+          </div>
+          <p class="stat-footnote">¹ Porcentajes aproximados extraídos de informes de caracterización de Bienestar Universitario, semestres 2021-I a 2025-II. No son datos individuales.</p>
+
+          <div class="problem-callout fade-in">
+            <strong>PDI 2025-2032:</strong> reducir la deserción 2.5 puntos porcentuales.
+            Sin un sistema predictivo que actúe antes del tercer corte, la meta es inalcanzable
+            con la capacidad operativa actual de Bienestar.
+          </div>
+        </div>
+
+        <div class="gap-list fade-in">
+          <div class="gap-item">
+            <div class="gap-icon"><i class="ph-bold ph-plugs-connected"></i></div>
+            <div class="gap-text">
+              <h4>Desconexión Adviser–Teams</h4>
+              <p>Adviser V.11 registra notas de parciales pero no está integrado con
+              Microsoft Teams, donde se suben los talleres y queda el rastro de entregas tardías o ausentes.</p>
+            </div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-icon"><i class="ph-bold ph-clock-countdown"></i></div>
+            <div class="gap-text">
+              <h4>Alerta tardía</h4>
+              <p>Las alertas actuales se activan cuando el promedio final ya está comprometido —
+              al cierre del semestre. La ventana de intervención efectiva es el segundo corte.</p>
+            </div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-icon"><i class="ph-bold ph-chart-line-down"></i></div>
+            <div class="gap-text">
+              <h4>Posible desconexión entre caracterización y rendimiento</h4>
+              <p>Los informes de Bienestar sugieren que la caracterización socioeconómica
+              podría no integrarse de forma sistemática con el seguimiento del rendimiento
+              por corte en Adviser V.11. Esta hipótesis orienta el proyecto y
+              requiere confirmación institucional directa.</p>
+            </div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-icon"><i class="ph-bold ph-shield-slash"></i></div>
+            <div class="gap-text">
+              <h4>Restricción legal de datos reales</h4>
+              <p>La Ley 1581 de 2012 (Habeas Data) impide el acceso a microdatos individuales
+              de estudiantes sin un acuerdo de confidencialidad formal vigente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── CHAPTER 02 ──────────────── -->
+  <div class="chapter-break" data-chapter="3" data-num="02">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">02</div>
+      <h2 class="cb-title">Los <span class="highlight">Usuarios</span></h2>
+      <p class="cb-sub">Quiénes interactúan con el sistema y qué necesita cada actor para tomar decisiones a tiempo.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── USUARIOS ──────────────── -->
+  <section class="section section-alt" id="usuarios">
+    <div class="container">
+      <h2 class="section-title fade-in">Actores del <span class="highlight">sistema</span></h2>
+      <p class="section-subtitle fade-in">
+        El pipeline no sirve al estudiante directamente — sirve a los agentes institucionales
+        que pueden intervenir antes de que la deserción se consolide.
+      </p>
+
+      <div class="users-grid">
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-first-aid-kit"></i></div>
+          <h3>Bienestar Universitario</h3>
+          <p>Recibe alertas priorizadas por nivel de riesgo. Con Precision del 100% sobre datos sintéticos, cada alerta emitida corresponde a un desertor real — sin generar falsas alarmas que saturen la capacidad operativa.</p>
+          <span class="user-tag">Actor primario</span>
+        </div>
+
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-chalkboard-teacher"></i></div>
+          <h3>Coordinadores Académicos</h3>
+          <p>Consultan el tablero de riesgo por programa y semestre. Identifican qué materias
+          concentran los patrones de ausentismo o notas bajas antes del cierre del período.</p>
+          <span class="user-tag">Actor secundario</span>
+        </div>
+
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-user-check"></i></div>
+          <h3>Docentes</h3>
+          <p>Aportan los datos: planillas de notas de Teams, autoevaluación y coevaluación por corte.
+          La calidad del dato de entrada determina directamente la precisión de la alerta.</p>
+          <span class="user-tag">Proveedor de datos</span>
+        </div>
+
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-student"></i></div>
+          <h3>Estudiante en Riesgo</h3>
+          <p>Beneficiario indirecto. No ve el sistema — recibe la llamada o cita de Bienestar
+          que el sistema generó. El objetivo es interceptarlo antes de que tome la decisión de abandonar.</p>
+          <span class="user-tag">Beneficiario final</span>
+        </div>
+
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-database"></i></div>
+          <h3>Sistema Adviser V.11</h3>
+          <p>Fuente de notas de parciales por corte. En la arquitectura propuesta, expone un extracto
+          anonimizado que el pipeline ETL consume para construir la matriz de entrenamiento.</p>
+          <span class="user-tag">Sistema fuente</span>
+        </div>
+
+        <div class="user-card fade-in">
+          <div class="user-icon-wrap"><i class="ph-fill ph-microsoft-teams-logo"></i></div>
+          <h3>Microsoft Teams</h3>
+          <p>Fuente de notas de talleres y entregas. El registro de entrega tardía o ausente en Teams
+          captura la señal de presión laboral que Adviser no puede detectar por sí solo.</p>
+          <span class="user-tag">Sistema fuente</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── CHAPTER 03 ──────────────── -->
+  <div class="chapter-break" data-chapter="4" data-num="03">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">03</div>
+      <h2 class="cb-title">Los <span class="highlight">Datos Sintéticos</span></h2>
+      <p class="cb-sub">Cómo se construyeron 1 000 estudiantes desde los informes de Bienestar sin violar la Ley 1581 de 2012.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── DATOS SINTÉTICOS ──────────────── -->
+  <section class="section" id="datos">
+    <div class="container">
+      <h2 class="section-title fade-in">Generación de datos <span class="highlight">sintéticos</span></h2>
+      <p class="section-subtitle fade-in">
+        Sin acceso a microdatos reales, se calibraron distribuciones estadísticas
+        a partir de los informes agregados de caracterización de Bienestar
+        (10 semestres: 2021-I a 2025-II) usando simulación Monte Carlo.
+      </p>
+
+      <div class="datos-intro">
+        <div class="datos-why fade-in">
+          <h3>Por qué datos sintéticos</h3>
+          <p>
+            Los informes de Bienestar Universitario publican porcentajes agregados —
+            "el 67% trabaja", "el 44% tiene debilidad en matemáticas" — pero no
+            registros individuales. A partir de esos porcentajes se construyeron
+            distribuciones de probabilidad que reproducen la misma frecuencia de
+            ocurrencia a nivel de estudiante.
+          </p>
+          <p>
+            El objetivo de esta fase (TRL 2/3) no es predecir desertores reales.
+            Es demostrar que la arquitectura es técnicamente coherente y que las
+            variables elegidas tienen poder discriminante estadístico.
+          </p>
+          <div class="ley-box">
+            <i class="ph-fill ph-lock"></i>
+            <p>
+              <strong>Ley 1581/2012 — Habeas Data:</strong> impide el acceso a
+              microdatos individuales sin acuerdo de confidencialidad vigente.
+              El siguiente paso del proyecto es firmar ese acuerdo con la ETITC
+              para reemplazar los datos sintéticos por sábanas anonimizadas de
+              Adviser V.11.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-steps fade-in">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Lectura de informes PDF</h4>
+              <p>Se extrajeron los porcentajes de 9 informes de caracterización (2021-I a 2025-II)
+              para establecer las distribuciones base de cada variable socioeconómica.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Simulación Monte Carlo</h4>
+              <p>Variables binarias (trabaja, debilidad_mate) se muestrearon con Bernoulli calibrada.
+              Notas continuas se generaron con distribución normal truncada entre 0 y 5.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Inyección de reglas de negocio</h4>
+              <p>Cuatro reglas deterministas conectan el perfil socioeconómico con el rendimiento
+              académico, replicando los mecanismos causales documentados en la literatura.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Asignación de la variable objetivo</h4>
+              <p>Se asignó una probabilidad de persistencia vía función logística sobre el promedio definitivo. La asignación estocástica resultó en una tasa de deserción sintética del 17.6%.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <h4>Exportación a 3 CSV relacionales</h4>
+              <p>El dataset se dividió en tres archivos con <code style="font-family:monospace;font-size:0.85em">id_estudiante</code> como llave,
+              replicando la arquitectura real de Adviser + Teams + Bienestar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSV cards -->
+      <h3 class="rules-title fade-in">Arquitectura de tres fuentes</h3>
+      <div class="csv-grid fade-in">
+        <div class="csv-card">
+          <div class="csv-header">
+            <i class="ph-fill ph-file-csv"></i>
+            <h4>bienestar_caracterizacion.csv</h4>
+          </div>
+          <div class="csv-body">
+            <p>Perfil socioeconómico inicial del estudiante: trabaja, debilidad en matemáticas,
+            brecha de bachillerato, conflicto tiempo, barrera tecnológica e inseguridad
+            alimentaria (variable descriptiva sin regla de penalización directa).</p>
+            <div class="csv-meta">
+              <span class="csv-badge">1 000 filas</span>
+              <span class="csv-badge">7 columnas</span>
+              <span class="csv-badge">Bienestar</span>
+            </div>
+          </div>
+        </div>
+        <div class="csv-card">
+          <div class="csv-header">
+            <i class="ph-fill ph-file-csv"></i>
+            <h4>adviser_teams_notas.csv</h4>
+          </div>
+          <div class="csv-body">
+            <p>Rendimiento académico por los tres cortes: inasistencias (0–8 sesiones),
+            notas Teams, parcial, autoevaluación, coevaluación y definitiva ponderada.
+            Mínimo 1 entrega + 1 parcial + autoevaluación + coevaluación por corte.</p>
+            <div class="csv-meta">
+              <span class="csv-badge">1 000 filas</span>
+              <span class="csv-badge">19 columnas</span>
+              <span class="csv-badge">Adviser + Teams</span>
+            </div>
+          </div>
+        </div>
+        <div class="csv-card">
+          <div class="csv-header">
+            <i class="ph-fill ph-file-csv"></i>
+            <h4>registro_admisiones_target.csv</h4>
+          </div>
+          <div class="csv-body">
+            <p>Variable objetivo del modelo. Indica si el estudiante completó el semestre
+            (0) o lo abandonó (1). Tasa de deserción sintética: 17.6%.</p>
+            <div class="csv-meta">
+              <span class="csv-badge">1 000 filas</span>
+              <span class="csv-badge">2 columnas</span>
+              <span class="csv-badge">Admisiones</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Vista previa de los datos ── -->
+      <div class="preview-inline">
+        <h3 class="rules-title fade-in">Vista previa — primeras 5 filas</h3>
+
+        <div class="dataset-tabs fade-in" id="datasetTabs">
+          <button class="tab-btn active" data-tab="bienestar">bienestar_caracterizacion.csv</button>
+          <button class="tab-btn" data-tab="notas">adviser_teams_notas.csv</button>
+          <button class="tab-btn" data-tab="target">registro_admisiones_target.csv</button>
+        </div>
+
+        <!-- BIENESTAR -->
+        <div class="sheet-panel active" id="sheet-bienestar">
+          <div class="sheet-bar">
+            <span class="sheet-bar-title"><i class="ph ph-file-csv"></i> bienestar_caracterizacion.csv</span>
+            <span class="sheet-bar-meta">7 columnas · 1 000 filas · Fuente: Bienestar Universitario</span>
+          </div>
+          <div class="sheet-scroll">
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th>#</th><th>id_estudiante</th><th>trabaja</th><th>debilidad_mate</th>
+                  <th>brecha_bach</th><th>conflicto_tiempo</th><th>barrera_tecnologica</th><th>inseguridad_alimentaria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>EST-0001</td><td class="cell-0">0</td><td class="cell-1">1</td><td>3</td><td class="cell-0">0</td><td class="cell-1">1</td><td class="cell-0">0</td></tr>
+                <tr><td>2</td><td>EST-0002</td><td class="cell-1">1</td><td class="cell-0">0</td><td>1</td><td class="cell-1">1</td><td class="cell-0">0</td><td class="cell-1">1</td></tr>
+                <tr><td>3</td><td>EST-0003</td><td class="cell-0">0</td><td class="cell-1">1</td><td>5</td><td class="cell-1">1</td><td class="cell-0">0</td><td class="cell-0">0</td></tr>
+                <tr><td>4</td><td>EST-0004</td><td class="cell-0">0</td><td class="cell-1">1</td><td>2</td><td class="cell-0">0</td><td class="cell-1">1</td><td class="cell-1">1</td></tr>
+                <tr><td>5</td><td>EST-0005</td><td class="cell-1">1</td><td class="cell-0">0</td><td>0</td><td class="cell-1">1</td><td class="cell-1">1</td><td class="cell-1">1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- NOTAS -->
+        <div class="sheet-panel" id="sheet-notas">
+          <div class="sheet-bar">
+            <span class="sheet-bar-title"><i class="ph ph-file-csv"></i> adviser_teams_notas.csv</span>
+            <span class="sheet-bar-meta">19 columnas · 1 000 filas · Fuente: Adviser / Microsoft Teams</span>
+          </div>
+          <div class="sheet-scroll">
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th>#</th><th>id_estudiante</th>
+                  <th>inasist_c1</th><th>teams_c1</th><th>parcial_c1</th><th>auto_c1</th><th>coev_c1</th><th>def_c1</th>
+                  <th>inasist_c2</th><th>teams_c2</th><th>parcial_c2</th><th>auto_c2</th><th>coev_c2</th><th>def_c2</th>
+                  <th>inasist_c3</th><th>teams_c3</th><th>parcial_c3</th><th>auto_c3</th><th>coev_c3</th><th>def_c3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>EST-0001</td><td>0</td><td>3.59</td><td>3.30</td><td>3.03</td><td>4.75</td><td>4.07</td><td>1</td><td>3.92</td><td>3.94</td><td>3.65</td><td>3.04</td><td>4.23</td><td>1</td><td>3.96</td><td>4.12</td><td>3.33</td><td>3.24</td><td>3.64</td></tr>
+                <tr><td>2</td><td>EST-0002</td><td>1</td><td>2.07</td><td>3.35</td><td>3.94</td><td>4.05</td><td>3.16</td><td class="cell-risk">6</td><td>2.21</td><td>3.43</td><td class="cell-risk">0.00</td><td class="cell-risk">0.00</td><td>2.34</td><td>4</td><td>1.70</td><td>3.30</td><td>4.08</td><td>2.98</td><td>2.49</td></tr>
+                <tr><td>3</td><td>EST-0003</td><td>3</td><td>3.81</td><td>2.70</td><td>3.88</td><td>3.43</td><td>3.34</td><td>3</td><td>3.31</td><td>2.01</td><td>3.96</td><td>3.65</td><td>2.79</td><td>2</td><td>2.36</td><td>2.07</td><td>3.83</td><td>3.65</td><td>2.81</td></tr>
+                <tr><td>4</td><td>EST-0004</td><td>1</td><td>3.93</td><td>4.71</td><td>4.50</td><td>3.56</td><td>4.52</td><td>1</td><td>3.97</td><td>4.66</td><td>4.42</td><td>2.79</td><td>3.97</td><td>1</td><td>2.64</td><td>3.88</td><td>2.82</td><td>4.20</td><td>3.54</td></tr>
+                <tr><td>5</td><td>EST-0005</td><td>4</td><td>2.80</td><td>3.70</td><td>3.82</td><td>4.24</td><td>3.45</td><td>2</td><td>3.50</td><td>2.22</td><td>3.36</td><td>3.64</td><td>2.73</td><td>3</td><td>2.57</td><td>3.05</td><td>4.18</td><td>3.88</td><td>3.15</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TARGET -->
+        <div class="sheet-panel" id="sheet-target">
+          <div class="sheet-bar">
+            <span class="sheet-bar-title"><i class="ph ph-file-csv"></i> registro_admisiones_target.csv</span>
+            <span class="sheet-bar-meta">2 columnas · 1 000 filas · Variable objetivo del modelo</span>
+          </div>
+          <div class="sheet-scroll">
+            <table class="sheet-table">
+              <thead>
+                <tr><th>#</th><th>id_estudiante</th><th>deserto</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>EST-0001</td><td class="cell-safe">0 — Persiste</td></tr>
+                <tr><td>2</td><td>EST-0002</td><td class="cell-risk">1 — Desertó</td></tr>
+                <tr><td>3</td><td>EST-0003</td><td class="cell-risk">1 — Desertó</td></tr>
+                <tr><td>4</td><td>EST-0004</td><td class="cell-safe">0 — Persiste</td></tr>
+                <tr><td>5</td><td>EST-0005</td><td class="cell-safe">0 — Persiste</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Reglas de negocio -->
+      <h3 class="rules-title fade-in">Cuatro reglas de negocio</h3>
+      <div class="rules-grid fade-in">
+        <div class="rule-card">
+          <div class="rule-badge">R1</div>
+          <div class="rule-text">
+            <h4>Presión laboral → inasistencias físicas y virtuales</h4>
+            <p>La presión laboral genera inasistencias como variable continua (0–8 sesiones/corte).
+            Cada sesión faltada descuenta −0.30 en la entrega de Teams del corte.
+            En C3 la media de inasistencias sube de 3.0 a 4.0 por fatiga acumulada.</p>
+            <code class="code-snippet">trabaja | conflicto → inasist_cX ~ N(3.0,1.2)[1,8]; teams -= inasist×0.30</code>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-badge">R2</div>
+          <div class="rule-text">
+            <h4>Riesgo cognitivo → parciales bajos en ciencias básicas</h4>
+            <p>Estudiantes con más de 3 años de brecha bachillerato y debilidad en matemáticas
+            obtienen parciales con media 2.2 vs. 3.5–4.2 del resto, recreando el choque
+            cognitivo en ciencias básicas.</p>
+            <code class="code-snippet">brecha_bach > 3 & debilidad_mate → parcial_cX ~ N(2.2, 0.5)</code>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-badge">R3</div>
+          <div class="rule-text">
+            <h4>Barrera tecnológica → penalización en entregas Teams</h4>
+            <p>Depender exclusivamente de un celular para actividades de ingeniería añade
+            −0.50 adicional en la nota de entrega de Teams de cada corte, independientemente
+            de la asistencia presencial.</p>
+            <code class="code-snippet">barrera_tecnologica == 1 → notas_teams_cX -= 0.50</code>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-badge">R4</div>
+          <div class="rule-text">
+            <h4>Abandono tácito → desconexión total de evaluación formativa</h4>
+            <p>Si el estudiante pierde ≥ 6 de 8 sesiones (75%+ de falta), con probabilidad
+            creciente por corte (50%→70%→90%), la autoevaluación y coevaluación quedan en 0,
+            señal de que dejó de participar activamente.</p>
+            <code class="code-snippet">inasistencias_cX >= 6 → P(auto=coev=0) ∈ {0.50, 0.70, 0.90}</code>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ──────────────── CHAPTER 04 ──────────────── -->
+  <div class="chapter-break" data-chapter="5" data-num="04">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">04</div>
+      <h2 class="cb-title">El <span class="highlight">Modelo</span></h2>
+      <p class="cb-sub">Cómo se entrenó el clasificador, cómo se evaluó y qué significa cada número de la matriz de confusión.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── MODELO ──────────────── -->
+  <section class="section section-alt" id="modelo">
+    <div class="container">
+      <h2 class="section-title fade-in">Pipeline de <span class="highlight">entrenamiento</span></h2>
+      <p class="section-subtitle fade-in">
+        El pipeline ETL convierte los tres CSV en una matriz unificada de 1 000 × 24 variables.
+        El clasificador Random Forest se entrena sobre el 80% y se evalúa sobre el 20% restante,
+        reservado y estratificado desde el inicio.
+      </p>
+
+      <div class="model-overview">
+        <div class="pipeline-diagram fade-in">
+          <div class="pipe-step">
+            <div class="pipe-icon"><i class="ph-bold ph-funnel"></i></div>
+            <div class="pipe-info">
+              <h4>Fase 1 — ETL</h4>
+              <p>INNER JOIN de los 3 CSV por <code style="font-family:monospace">id_estudiante</code> → matriz 1 000 × 26</p>
+            </div>
+          </div>
+          <div class="pipe-arrow"><i class="ph-bold ph-arrow-down"></i></div>
+          <div class="pipe-step">
+            <div class="pipe-icon"><i class="ph-bold ph-wrench"></i></div>
+            <div class="pipe-info">
+              <h4>Fase 2 — Feature Engineering</h4>
+              <p>Se elimina <code style="font-family:monospace">id_estudiante</code> (identificador sin valor predictivo). Se separan X e y.</p>
+            </div>
+          </div>
+          <div class="pipe-arrow"><i class="ph-bold ph-arrow-down"></i></div>
+          <div class="pipe-step">
+            <div class="pipe-icon"><i class="ph-bold ph-scissors"></i></div>
+            <div class="pipe-info">
+              <h4>Fase 3 — Split estratificado</h4>
+              <p>80% entrenamiento (800 estudiantes) / 20% prueba (200 estudiantes), <code style="font-family:monospace">stratify=y</code></p>
+            </div>
+          </div>
+          <div class="pipe-arrow"><i class="ph-bold ph-arrow-down"></i></div>
+          <div class="pipe-step">
+            <div class="pipe-icon"><i class="ph-bold ph-tree-structure"></i></div>
+            <div class="pipe-info">
+              <h4>Fase 4 — Entrenamiento</h4>
+              <p>RandomForestClassifier con 100 árboles, profundidad máxima 6, <code style="font-family:monospace">random_state=42</code></p>
+            </div>
+          </div>
+          <div class="pipe-arrow"><i class="ph-bold ph-arrow-down"></i></div>
+          <div class="pipe-step">
+            <div class="pipe-icon"><i class="ph-bold ph-chart-bar"></i></div>
+            <div class="pipe-info">
+              <h4>Fase 5 — Evaluación</h4>
+              <p>Matriz de confusión, métricas por clase, curva ROC/PR, importancia de variables</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="model-params fade-in">
+          <h3>Hiperparámetros del modelo</h3>
+          <div class="param-list">
+            <div class="param-row">
+              <span class="param-key">n_estimators</span>
+              <span class="param-val">100</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">max_depth</span>
+              <span class="param-val">6</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">min_samples_leaf</span>
+              <span class="param-val">4</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">random_state</span>
+              <span class="param-val">42</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">split ratio</span>
+              <span class="param-val">80 / 20</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">estratificado</span>
+              <span class="param-val">Sí</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">threshold</span>
+              <span class="param-val">0.50</span>
+            </div>
+            <div class="param-row">
+              <span class="param-key">feature importance</span>
+              <span class="param-val">Gini</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confusion Matrix -->
+      <div class="confusion-wrap fade-in">
+        <h3 class="confusion-title">Matriz de confusión — conjunto de prueba (n = 200)</h3>
+        <p class="confusion-sub">
+          Cada celda muestra cuántos de los 200 estudiantes reservados fueron clasificados correctamente o no.
+          La fila representa la realidad; la columna, lo que predijo el modelo.
+        </p>
+
+        <div class="confusion-grid">
+          <div></div>
+          <div class="cm-header">Predijo: Persiste</div>
+          <div class="cm-header">Predijo: Deserto</div>
+
+          <div class="cm-row-label">Real: Persiste</div>
+          <div class="cm-cell tn">
+            <span class="cm-num">165</span>
+            <span class="cm-label">Verdaderos Negativos</span>
+            <span class="cm-note">Ninguna alerta — correcto</span>
+          </div>
+          <div class="cm-cell fp">
+            <span class="cm-num">0</span>
+            <span class="cm-label">Falsos Positivos</span>
+            <span class="cm-note">Cero falsas alarmas</span>
+          </div>
+
+          <div class="cm-row-label">Real: Deserto</div>
+          <div class="cm-cell fn">
+            <span class="cm-num">10</span>
+            <span class="cm-label">Falsos Negativos</span>
+            <span class="cm-note">Sin alerta — error crítico</span>
+          </div>
+          <div class="cm-cell tp">
+            <span class="cm-num">25</span>
+            <span class="cm-label">Verdaderos Positivos</span>
+            <span class="cm-note">Alerta correcta</span>
+          </div>
+        </div>
+
+        <div class="fn-callout">
+          <i class="ph-fill ph-warning"></i>
+          <p>
+            Los <strong>10 Falsos Negativos</strong> son el error de mayor costo institucional.
+            Con <strong>0 Falsos Positivos</strong>, cada alerta que emite el modelo es un
+            desertor real confirmado. Bajar el umbral de 0.5 a 0.35 reduce los FN a 6
+            a costa de 3 alertas adicionales (Recall sube de 71.4% a 82.9%).
+            Ese trade-off lo decide Bienestar según su capacidad operativa.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ──────────────── CHAPTER 05 ──────────────── -->
+  <div class="chapter-break" data-chapter="6" data-num="05">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">05</div>
+      <h2 class="cb-title">Los <span class="highlight">Resultados</span></h2>
+      <p class="cb-sub">Métricas de rendimiento, importancia de variables y el hallazgo central sobre qué predice realmente la deserción.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── RESULTADOS ──────────────── -->
+  <section class="section" id="resultados">
+    <div class="container">
+      <h2 class="section-title fade-in">Métricas de <span class="highlight">rendimiento</span></h2>
+      <p class="section-subtitle fade-in">
+        Evaluado sobre los 200 estudiantes del conjunto de prueba — nunca vistos durante el entrenamiento.
+        Recall es la métrica más importante: el costo de no detectar un desertor supera al de una falsa alarma.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-card fade-in">
+          <div class="metric-icon"><i class="ph-fill ph-check-circle"></i></div>
+          <div class="metric-value">95.0%</div>
+          <div class="metric-name">Accuracy</div>
+          <div class="metric-desc">Del total de predicciones, el 95.0% fue correcta</div>
+        </div>
+        <div class="metric-card fade-in">
+          <div class="metric-icon"><i class="ph-fill ph-crosshair"></i></div>
+          <div class="metric-value">100%</div>
+          <div class="metric-name">Precision</div>
+          <div class="metric-desc">Cada alerta emitida corresponde a un desertor real</div>
+        </div>
+        <div class="metric-card fade-in">
+          <div class="metric-icon"><i class="ph-fill ph-magnifying-glass"></i></div>
+          <div class="metric-value">71.4%</div>
+          <div class="metric-name">Recall</div>
+          <div class="metric-desc">Detecta 71 de cada 100 desertores reales</div>
+        </div>
+        <div class="metric-card fade-in">
+          <div class="metric-icon"><i class="ph-fill ph-scales"></i></div>
+          <div class="metric-value">83.3%</div>
+          <div class="metric-name">F1-Score</div>
+          <div class="metric-desc">Media armónica de Precision y Recall</div>
+        </div>
+        <div class="metric-card fade-in">
+          <div class="metric-icon"><i class="ph-fill ph-warning-circle"></i></div>
+          <div class="metric-value">0 FP</div>
+          <div class="metric-name">Falsas Alarmas</div>
+          <div class="metric-desc">Ninguna alerta innecesaria en los 200 casos de prueba</div>
+        </div>
+      </div>
+
+      <!-- Feature Importance -->
+      <div class="features-section fade-in">
+        <h3 class="features-title">Importancia de <span class="highlight">variables</span> — Top 10</h3>
+        <p class="features-sub">
+          Reducción promedio de impureza Gini sobre los 100 árboles del Random Forest.
+          Las 5 primeras variables son todas académicas dinámicas (por corte), no socioeconómicas estáticas.
+        </p>
+
+        <div class="feature-bar-list">
+          <div class="feature-bar-item">
+            <span class="feat-name">definitiva_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:100%"></div></div>
+            <span class="feat-pct">18.9%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">autoevaluacion_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:69.3%"></div></div>
+            <span class="feat-pct">13.1%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">definitiva_c2</span>
+            <div class="feat-track"><div class="feat-fill" style="width:56.2%"></div></div>
+            <span class="feat-pct">10.6%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">inasistencias_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:47.2%"></div></div>
+            <span class="feat-pct">8.9%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">definitiva_c1</span>
+            <div class="feat-track"><div class="feat-fill" style="width:41.1%"></div></div>
+            <span class="feat-pct">7.8%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">coevaluacion_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:40.1%"></div></div>
+            <span class="feat-pct">7.6%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">parcial_c2</span>
+            <div class="feat-track"><div class="feat-fill" style="width:28.2%"></div></div>
+            <span class="feat-pct">5.3%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">parcial_c1</span>
+            <div class="feat-track"><div class="feat-fill" style="width:24.5%"></div></div>
+            <span class="feat-pct">4.6%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">notas_teams_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:23.9%"></div></div>
+            <span class="feat-pct">4.5%</span>
+          </div>
+          <div class="feature-bar-item">
+            <span class="feat-name">parcial_c3</span>
+            <div class="feat-track"><div class="feat-fill" style="width:19.5%"></div></div>
+            <span class="feat-pct">3.7%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ──────────────── CHAPTER 06 ──────────────── -->
+  <div class="chapter-break" data-chapter="7" data-num="06">
+    <div class="cb-inner">
+      <span class="cb-label">Capítulo</span>
+      <div class="cb-num">06</div>
+      <h2 class="cb-title">Conclusiones y <span class="highlight">Próximos Pasos</span></h2>
+      <p class="cb-sub">Qué quedó demostrado, qué no se puede afirmar aún y la hoja de ruta hacia datos reales.</p>
+    </div>
+  </div>
+
+  <!-- ──────────────── CONCLUSIONES ──────────────── -->
+  <section class="section section-alt" id="conclusiones">
+    <div class="container">
+      <h2 class="section-title fade-in">Hallazgos y <span class="highlight">limitaciones</span></h2>
+      <p class="section-subtitle fade-in">
+        El hallazgo central: el efecto socioeconómico no actúa directamente sobre la deserción —
+        actúa primero sobre las notas, y son las notas las que predicen el abandono.
+      </p>
+
+      <div class="conclusions-grid">
+        <div class="conclusion-block fade-in">
+          <h3><i class="ph-fill ph-check-square"></i> Lo que quedó demostrado</h3>
+          <div class="check-list">
+            <div class="check-item">
+              <i class="ph-fill ph-check-circle ok"></i>
+              <span>La arquitectura Multi-CSV produce una matriz unificada sin errores ni valores nulos sobre 1 000 estudiantes.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-check-circle ok"></i>
+              <span>Los patrones inyectados son estadísticamente separables: Precision = 100%, Recall = 71.4%, F1 = 83.3%, 0 falsas alarmas.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-check-circle ok"></i>
+              <span>Las variables académicas dinámicas por corte tienen mayor peso predictivo que el perfil socioeconómico estático.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-check-circle ok"></i>
+              <span>El pipeline ETL → RandomForest → Evaluación es completamente reproducible con <code style="font-family:monospace">random_state=42</code>.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-check-circle ok"></i>
+              <span>La autoevaluación y coevaluación cero (Regla 4) es detectada como señal de abandono con 20.7% de peso combinado (auto_c3 + coev_c3).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="conclusion-block fade-in">
+          <h3><i class="ph-fill ph-warning-circle"></i> Lo que NO se puede afirmar aún</h3>
+          <div class="check-list">
+            <div class="check-item">
+              <i class="ph-fill ph-warning warn"></i>
+              <span>Ninguna métrica de rendimiento es válida para producción — los datos sintéticos son "demasiado limpios".</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-warning warn"></i>
+              <span>El AUC 0.976 no es una promesa. Es un artefacto de datos sintéticos calibrados. En producción con datos reales se espera 0.75–0.85.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-warning warn"></i>
+              <span>El ranking de Feature Importance puede subestimar variables binarias por el sesgo del índice Gini.</span>
+            </div>
+            <div class="check-item">
+              <i class="ph-fill ph-warning warn"></i>
+              <span>No se validó con k-fold cross-validation — el split 80/20 único puede tener varianza alta.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="next-steps fade-in">
+        <div class="next-steps-header">
+          <i class="ph-fill ph-map-trifold"></i>
+          <h3>Hoja de ruta — Próximas fases</h3>
+        </div>
+        <div class="next-step-row">
+          <div class="step-circle">1</div>
+          <div class="next-step-info">
+            <h4>Bajar el threshold de RF a 0.35</h4>
+            <p>Con umbral 0.35, el Recall sube de 71.4% a 82.9% (FN bajan de 10 a 6) a costa de 3 falsas alarmas adicionales. Ese trade-off lo decide Bienestar según su capacidad operativa.</p>
+          </div>
+        </div>
+        <div class="next-step-row">
+          <div class="step-circle">2</div>
+          <div class="next-step-info">
+            <h4>XGBoost con scale_pos_weight=4.68 — evaluado sobre datos sintéticos</h4>
+            <p>Con <code style="font-family:monospace">scale_pos_weight=4.68</code>, XGBoost detecta 30 de 35 desertores (Recall=85.7%, F1=87.0%) frente a 25/35 del RF base (Recall=71.4%). Costo: 4 alertas adicionales por ciclo. La validación cruzada k=5 confirma estabilidad: F1=81.3%±2.4%, AUC=0.967±0.009. Es el candidato para producción cuando se cuente con datos reales.</p>
+          </div>
+        </div>
+        <div class="next-step-row">
+          <div class="step-circle">3</div>
+          <div class="next-step-info">
+            <h4>Validación cruzada k=5 — ya ejecutada sobre XGBoost</h4>
+            <p>Completado sobre datos sintéticos: F1=81.3%±2.4%, Recall=81.9%±6.5%, AUC=96.7%±0.9%. La varianza del Recall (±6.5%) indica que el modelo es sensible a la distribución del split, lo que refuerza la necesidad de datos reales para una estimación definitiva.</p>
+          </div>
+        </div>
+        <div class="next-step-row">
+          <div class="step-circle">4</div>
+          <div class="next-step-info">
+            <h4>Acuerdo de confidencialidad con ETITC</h4>
+            <p>Acceder a sábanas anonimizadas de Adviser V.11 bajo Ley 1581. Este es el paso que lleva el proyecto de TRL 3 a TRL 5.</p>
+          </div>
+        </div>
+        <div class="next-step-row">
+          <div class="step-circle">5</div>
+          <div class="next-step-info">
+            <h4>SHAP Values para interpretabilidad</h4>
+            <p>Reemplazar el Feature Importance de Gini con SHAP para eliminar el sesgo contra variables binarias y obtener explicaciones por estudiante.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ──────────────── OUTRO ──────────────── -->
+  <section id="outro">
+    <div class="hero-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="outro-inner">
+      <h2>Un sistema que <span class="highlight">actúa antes</span> de que sea demasiado tarde</h2>
+      <p>
+        La deserción no ocurre de repente. Las señales están en las notas del segundo corte,
+        en las entregas que no llegan en Teams, en el ausentismo que sube cada semana.
+      </p>
+      <p>
+        Este pipeline conecta esas señales y las convierte en una alerta oportuna para Bienestar.
+      </p>
+      <div class="outro-tags">
+        <span class="outro-tag"><i class="ph-fill ph-tree-structure"></i> Random Forest</span>
+        <span class="outro-tag"><i class="ph-fill ph-database"></i> Datos Sintéticos</span>
+        <span class="outro-tag"><i class="ph-fill ph-shield-check"></i> TRL 2/3</span>
+        <span class="outro-tag"><i class="ph-fill ph-chart-line-up"></i> AUC 0.976</span>
+        <a href="explicacion.html" class="outro-tag outro-tag-link" title="Guía técnica: hiperparámetros, reglas de negocio y comparativa XGBoost">
+          <i class="ph-fill ph-graduation-cap"></i> ETITC PI-II
+          <i class="ph-bold ph-arrow-square-out" style="font-size:0.75em; margin-left:3px; opacity:0.7;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Jhon Alejandro Correal Martínez · Rafael Andrés Guzmán Rodríguez</strong>
+    &nbsp;·&nbsp; Docente: Doris Constanza Alvarado Mariño
+    &nbsp;·&nbsp; ETITC Sede Centro · Sistemas · 2025-2
+  </p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
