@@ -275,6 +275,64 @@
     .tag-warn { background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent); }
     .tag-info { background: color-mix(in srgb, var(--color-secondary) 12%, transparent); color: var(--color-secondary); }
 
+    /* ── Metrics legend ──────────────────────────────────────── */
+    .metrics-legend {
+      margin: 36px 0 28px;
+    }
+    .legend-title {
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .legend-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .legend-card-primary {
+      border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+      background: color-mix(in srgb, var(--color-primary) 5%, var(--bg-secondary));
+    }
+    .legend-card-risk {
+      border-color: rgba(239,68,68,0.30);
+      background: rgba(239,68,68,0.04);
+    }
+    .legend-card-warn {
+      border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--color-accent) 4%, var(--bg-secondary));
+    }
+    .legend-col {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+      padding: 2px 9px;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
+    .legend-col-primary { color: var(--color-primary); }
+    .legend-col-risk {
+      color: #ef4444;
+      background: rgba(239,68,68,0.10);
+    }
+    .legend-card p {
+      font-size: 0.855rem;
+      color: var(--text-secondary);
+      line-height: 1.62;
+    }
+
     /* ── Comparison table ────────────────────────────────────── */
     .comp-table-wrap {
       overflow-x: auto;
@@ -694,6 +752,54 @@ Grupo sin riesgo          :  parcial_cX ~ N_trunc( μ ∈ {3.5, 3.8, 4.2}, σ=0.
       El Recall es la métrica de mayor peso: no detectar un desertor tiene un costo institucional superior
       a emitir una alerta innecesaria.
     </p>
+  </div>
+
+  <!-- Leyenda de columnas -->
+  <div class="metrics-legend fade-in">
+    <p class="legend-title">Qué significa cada columna</p>
+    <div class="legend-grid">
+
+      <div class="legend-card">
+        <span class="legend-col">Umbral</span>
+        <p>Valor mínimo de probabilidad para emitir alerta. Si el modelo calcula P(desertor)=0.42 y el umbral es 0.50, no emite alerta; si el umbral es 0.35, sí lo hace. Bajar el umbral captura más desertores pero genera más alertas innecesarias.</p>
+      </div>
+
+      <div class="legend-card">
+        <span class="legend-col">Accuracy</span>
+        <p>Del total de 200 estudiantes de prueba, qué porcentaje clasificó correctamente (tanto "persiste" como "deserta"). Es la métrica más intuitiva pero la menos útil aquí: con solo el 17.6% de desertores, un modelo que nunca alerte a nadie alcanza el 82.4% de Accuracy.</p>
+      </div>
+
+      <div class="legend-card legend-card-warn">
+        <span class="legend-col">Precision</span>
+        <p>De todas las alertas que emitió el modelo, qué fracción corresponde a desertores reales. Precision = TP / (TP + FP). Un valor bajo genera "fatiga de alerta": Bienestar recibe muchos avisos falsos y deja de tomarlos en serio.</p>
+      </div>
+
+      <div class="legend-card legend-card-primary">
+        <span class="legend-col legend-col-primary">Recall ← crítica</span>
+        <p>De todos los desertores reales, qué porcentaje detectó el modelo. Recall = TP / (TP + FN). Es la métrica más importante para este proyecto: cada punto de Recall perdido es un estudiante en riesgo que no recibe ninguna llamada de Bienestar.</p>
+      </div>
+
+      <div class="legend-card">
+        <span class="legend-col">F1</span>
+        <p>Media armónica entre Precision y Recall. F1 = 2 × (Precision × Recall) / (Precision + Recall). Penaliza más que el promedio simple cuando una de las dos métricas colapsa. Es el indicador de equilibrio más usado en problemas con clases desbalanceadas.</p>
+      </div>
+
+      <div class="legend-card">
+        <span class="legend-col">AUC-ROC</span>
+        <p>Área bajo la curva ROC. Mide la capacidad del modelo de separar las dos clases independientemente del umbral elegido. Va de 0.5 (aleatorio) a 1.0 (perfecto). Un AUC de 0.97 significa que en el 97% de los pares (desertor, persiste) el modelo asigna mayor probabilidad al desertor.</p>
+      </div>
+
+      <div class="legend-card legend-card-risk">
+        <span class="legend-col legend-col-risk">FN ← error crítico</span>
+        <p>Falsos Negativos: desertores reales que el modelo clasificó como "persiste". Son los estudiantes en riesgo que no reciben ninguna alerta. Este es el error de mayor costo institucional — cada FN es un abandono que pudo prevenirse.</p>
+      </div>
+
+      <div class="legend-card">
+        <span class="legend-col">FP</span>
+        <p>Falsos Positivos: estudiantes que persistieron pero el modelo alertó como riesgo. Son las intervenciones innecesarias. Tienen un costo operativo (tiempo de Bienestar) pero no académico — el estudiante sigue en la institución de todas formas.</p>
+      </div>
+
+    </div>
   </div>
 
   <div class="comp-table-wrap fade-in">
