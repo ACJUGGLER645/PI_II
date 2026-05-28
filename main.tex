@@ -1,241 +1,413 @@
 \documentclass[12pt,letterpaper]{article}
 
-% --- PAQUETES ---
+% ── Paquetes ──────────────────────────────────────────────────────────────
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-tabla]{babel}
-\usepackage[margin=2.54cm]{geometry} 
-\usepackage{times} 
-\usepackage{setspace} 
-\usepackage{graphicx} 
-\usepackage{tabularx} 
-\usepackage{booktabs} 
-\usepackage{caption} 
-\usepackage{hyperref} 
-\usepackage{csquotes} 
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{times}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{csquotes}
 \usepackage{xcolor}
-\usepackage{xspace} 
-\usepackage{amsmath} 
-\usepackage{amssymb} 
-\usepackage[pages=all]{background} % Para la marca de agua
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[pages=all]{background}
 \usepackage[style=apa, backend=biber]{biblatex}
 
-% --- DEFINICIÓN DE COLORES ---
-\definecolor{verdeETITC}{RGB}{0, 145, 60} 
+% ── Colores ────────────────────────────────────────────────────────────────
+\definecolor{verdeETITC}{RGB}{0, 145, 60}
 
-% --- DECLARACIÓN DE SIGLAS Y CONCEPTOS ---
-\newcommand{\LMS}{\textit{Learning Management System} (LMS, Sistema de Gestión de Aprendizaje)\xspace}
-\newcommand{\ML}{\textit{Machine Learning} (ML, Aprendizaje Automático)\xspace}
+% ── Siglas ─────────────────────────────────────────────────────────────────
+\newcommand{\LMS}{\textit{Learning Management System} (LMS)\xspace}
+\newcommand{\ML}{\textit{Machine Learning} (ML)\xspace}
+\newcommand{\RF}{\textit{Random Forest} (RF)\xspace}
+\newcommand{\XGB}{\textit{XGBoost}\xspace}
 \newcommand{\ETITC}{Escuela Tecnológica Instituto Técnico Central (ETITC)\xspace}
 \newcommand{\PDI}{Plan de Desarrollo Institucional (PDI)\xspace}
 \newcommand{\TyT}{Técnica y Tecnológica (TyT)\xspace}
-\newcommand{\SPADIES}{Sistema de Prevención de la Deserción en la Educación Superior (SPADIES)\xspace}
-\newcommand{\TRL}{\textit{Technology Readiness Level} (TRL, Nivel de Madurez Tecnológica)\xspace}
+\newcommand{\SPADIES}{Sistema de Prevención y Análisis de la Deserción en Instituciones de Educación Superior (SPADIES)\xspace}
+\newcommand{\TRL}{\textit{Technology Readiness Level} (TRL)\xspace}
 \newcommand{\ETL}{Extracción, Transformación y Carga (ETL)\xspace}
-\newcommand{\CSV}{Valores Separados por Comas (CSV, \textit{Comma-Separated Values})\xspace}
+\newcommand{\CSV}{Valores Separados por Comas (CSV)\xspace}
+\newcommand{\EDM}{\textit{Educational Data Mining} (EDM)\xspace}
 
-% --- CONFIGURACIÓN DE LA MARCA DE AGUA (ETITC) ---
+% ── Marca de agua ─────────────────────────────────────────────────────────
 \backgroundsetup{
-scale=10,
-color=verdeETITC,
-opacity=0.1,
-angle=0,
-contents={ETITC}
+  scale=10,
+  color=verdeETITC,
+  opacity=0.1,
+  angle=0,
+  contents={ETITC}
 }
 
-% --- BASE DE DATOS DE REFERENCIAS ---
 \addbibresource{referencias.bib}
-
-% --- FORMATO DE TÍTULOS ---
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black}
+\onehalfspacing
 
 \begin{document}
 
-% --- PORTADA ---
+% ────────────────────────────── PORTADA ──────────────────────────────────
 \begin{titlepage}
-    \centering
-    \vspace*{1cm}
-    {\Large \textbf{Sistema de analítica predictiva basado en variables de micro-caracterización socioeconómica y rendimiento por cortes para la detección temprana del riesgo de deserción: Caso jornada nocturna ETITC Sede Centro en Bogotá.}}\\[2cm]
-    
-    \textbf{Estudiantes:}\\
-    Jhon Alejandro Correal Martínez\\
-    Rafael Andrés Guzmán Rodríguez\\[1.5cm]
-    
-    \textbf{Docente:}\\
-    Doris Constanza Alvarado Mariño\\[3cm]
-    
-    \vfill
-    \ETITC\\
-    Facultad de Sistemas – Proyecto de Investigación II\\
-    Bogotá, Colombia, Mayo 25 de 2026
+  \centering
+  \vspace*{1cm}
+  {\Large \textbf{Sistema de analítica predictiva basado en variables de
+  entorno dinámico para la detección temprana del riesgo de deserción:
+  Caso jornada nocturna ETITC Sede Centro en Bogotá.}}\\[2cm]
+
+  \textbf{Estudiantes:}\\
+  Jhon Alejandro Correal Martínez\\
+  Rafael Andrés Guzmán Rodríguez\\[1.5cm]
+
+  \textbf{Docente:}\\
+  Doris Constanza Alvarado Mariño\\[3cm]
+
+  \vfill
+  \ETITC\\
+  Facultad de Sistemas – Proyecto de Investigación II\\
+  Bogotá, Colombia, Mayo de 2026
 \end{titlepage}
 
 \newpage
 \tableofcontents
 \newpage
 
+% ────────────────────────────── RESUMEN ──────────────────────────────────
 \section{Resumen}
-La deserción estudiantil en la formación de nivel \TyT en Colombia representa un desafío crítico para la movilidad social y la equidad educativa. El presente proyecto propone el diseño conceptual de un sistema de analítica basado en \ML para la detección temprana del riesgo de abandono en la jornada nocturna de la \ETITC Sede Centro. Ante las restricciones institucionales de acceso a microdatos confidenciales individuales de los alumnos, la investigación adopta una metodología de simulación futura basada en reglas lógicas para validar los instrumentos de caracterización y evaluar la viabilidad de la arquitectura predictiva. A diferencia de los modelos actuales (Adviser V.11 y la plataforma RUSIA), que dependen de datos estáticos capturados de manera aislada al inicio del semestre, esta propuesta plantea un modelo de generación de datos relacionales calibrado con las distribuciones generales de los informes longitudinales de los últimos 10 semestres de Bienestar Universitario, con el fin de cruzarlos posteriormente con el comportamiento de entregas en Microsoft Teams y las calificaciones por cortes de Adviser. Metodológicamente, se formula un enfoque cuantitativo descriptivo-predictivo fundamentado en una arquitectura proyectada de múltiples archivos de \CSV independientes y conectados de forma relacional. Los resultados esperados buscan transformar la respuesta institucional de un modelo reactivo a uno preventivo, proporcionando un entorno de validación controlado que permita identificar vacíos informativos en las encuestas y optimizar las metas de retención estas en el \PDI 2025-2032.
 
-\vspace{0.5cm}
-\noindent \textbf{Palabras clave:} deserción estudiantil; Aprendizaje Automático; simulación de datos; micro-caracterización; cortes académicos.
+La deserción en la formación \TyT en Colombia afecta la movilidad social de miles de jóvenes cada año. Este proyecto diseñó y validó un sistema de analítica predictiva basado en \ML para detectar de forma temprana el riesgo de abandono en la jornada nocturna de la \ETITC Sede Centro. Dado que la institución no puede compartir microdatos reales de sus estudiantes por restricciones de privacidad establecidas en la Ley 1581 de 2012 \parencite{ley1581}, se construyó un conjunto de datos sintéticos de 1\,000 registros generado mediante reglas de negocio calibradas con los informes históricos de Bienestar Universitario de los últimos diez semestres \parencite{etitc_bienestar}. La simulación reprodujo la tasa de deserción histórica de la institución (17,6\,\%). Se entrenaron y compararon dos modelos supervisados: \RF y \XGB. El modelo \RF alcanzó una exactitud del 95,0\,\%, con precisión del 100\,\% y un área bajo la curva ROC de 0,976. El modelo \XGB, ajustado para reducir los casos no detectados, mejoró la sensibilidad al 85,7\,\%, identificando 30 de los 35 estudiantes en riesgo del conjunto de prueba. Los resultados confirman que las variables de autoevaluación y coevaluación del Corte~3, junto con la nota definitiva del mismo corte, son los predictores de mayor peso, lo que valida la arquitectura propuesta para una futura integración con datos reales anonimizados.
 
 \vspace{0.3cm}
-\noindent \textbf{Ecuación de búsqueda:} \texttt{(deserción estudiantil AND machine learning AND educación técnica y tecnológica AND Colombia)}
+\noindent\textbf{Palabras clave:} deserción estudiantil; aprendizaje automático; datos sintéticos; minería de datos educativos; jornada nocturna.
+
+\vspace{0.3cm}
+\noindent\textbf{Ecuación de búsqueda:} \texttt{(deserción estudiantil AND machine learning AND educación técnica AND Colombia)}
 
 \newpage
 
+% ──────────────────────── FORMULACIÓN DEL PROBLEMA ───────────────────────
 \section{Formulación del problema}
-La deserción en la formación \TyT en Colombia representa un fallo estructural para la movilidad social. Según el sistema \SPADIES 3.0 \parencite{men2025}, la tasa nacional de deserción anual se sitúa en el 8,5\%, cifra que contrasta con el 12,05\% reportado históricamente por la \ETITC \parencite{etitc2025b}. Para mitigar esta brecha de 3,55 puntos porcentuales, la institución busca reducir el indicador en un 2,5\% mediante el sistema de información Adviser V.11 (desarrollado por la casa de software Bersoft) y la plataforma RUSIA \parencite{bersoft2024}. Sin embargo, el análisis histórico longitudinal de los informes de Caracterización Estudiantil desarrollados por el área de Bienestar Universitario de la institución durante los últimos deis semestres consecutivos, divididos metodológicamente en dos bloques de control \parencite{etitc2021i, etitc2021ii, etitc2022i, etitc2022ii, etitc2023i}\parencite{etitc2023ii, etitc2024i, etitc2024ii, etitc2025i, etitc2025ii}, sugiere que la eficacia de estas herramientas tecnológicas es limitada frente a la compleja dinámica socioeconómica del estudiante de la jornada nocturna.
 
-\vspace{0.5cm}
-El riesgo de abandono es, por naturaleza, dinámico. Los datos consolidados de la última década académica institucional \parencite{etitc2021i, etitc2025ii} demuestran un patrón de vulnerabilidad social sumamente estable: entre el 67\% y el 70\% de la población estudiantil nocturna se encuentra vinculada laboralmente de manera activa, y más del 52\% manifiesta de forma recurrente una severa escasez de tiempo disponible para asumir sus compromisos académicos independientes. Esta tensión estructural entre las demandas del entorno productivo y las exigencias de la educación superior, definida por \textcite{arias2018} como un predictor crítico de abandono, genera una "pobreza de tiempo" crónica. Adicionalmente, factores del componente académico como la brecha temporal acumulada desde la graduación del bachillerato (donde más de 3 años de desvinculación académica afectan la adaptación y el reaprendizaje de competencias duras) y las marcadas debilidades auto-percibidas en asignaturas de ciencias básicas actúan como detonantes silenciosos del rezago que el sistema analítico vigente no logra integrar de forma continua.
+La deserción en la formación \TyT en Colombia es un problema que limita las oportunidades de vida de miles de personas. Según el \SPADIES 3.0, la tasa de deserción anual a nivel nacional se ubica en el 8,5\,\% \parencite{men2025}. La \ETITC registra una tasa del 12,05\,\%, que supera en 3,55 puntos porcentuales ese promedio \parencite{etitc2025b}. Para reducir esa brecha, el \PDI 2025-2032 de la institución fijó como meta bajar el indicador en 2,5 puntos porcentuales \parencite{etitc2025b}, apoyándose en el sistema Adviser V.11 de la empresa Bersoft y la plataforma RUSIA \parencite{bersoft2024}. Sin embargo, el análisis de los informes de caracterización de Bienestar Universitario de los últimos diez semestres muestra que estas herramientas no alcanzan a atender la situación real del estudiante nocturno \parencite{etitc_bienestar}.
 
-\vspace{0.5cm}
-Una brecha técnica y administrativa crítica radica en la inaccesibilidad de los microdatos crudos e individualizados por estudiante debido a barreras normativas de confidencialidad y protección de datos. Esto impide el entrenamiento directo de modelos de inteligencia artificial en las fases tempranas del desarrollo de ingeniería. Por otra parte, las plataformas institucionales actuales no procesan de manera continua la regularidad de las entregas en el ecosistema digital de Microsoft Teams ni su vinculación con las notas devueltas en el transcurso de los cortes académicos presenciales, perdiéndose la capacidad de ejecutar un monitoreo preventivo eficaz antes de consolidar reprobaciones definitivas.
+El riesgo de abandono cambia semana a semana según lo que le ocurre al estudiante fuera del aula: la carga del trabajo, los problemas económicos, la fatiga acumulada. Los registros históricos de la institución revelan que entre el 67\,\% y el 70\,\% de los estudiantes nocturnos trabaja de manera activa, y que más del 52\,\% declara falta severa de tiempo para estudiar por cuenta propia \parencite{etitc_bienestar}. Esta combinación genera lo que algunos autores denominan ``pobreza de tiempo'' \parencite{arias2018}: una restricción crónica que afecta la regularidad académica antes de que ningún sistema de alertas la detecte.
 
-\vspace{0.5cm}
-Finalmente, la vulnerabilidad material directa representa un punto ciego analítico fundamental demostrado en las encuestas de Bienestar \parencite{etitc2023i, etitc2024ii, etitc2025i}. Variables críticas recolectadas por Bienestar Universitario —como la inseguridad alimentaria por restricciones de recursos económicos o la barrera tecnológica derivada de depender exclusivamente de un teléfono celular inteligente con plan de datos limitado para el desarrollo de proyectos complejos de ingeniería— se encuentran completamente desvinculadas de los registros de calificaciones oficiales. Al ignorar estas condiciones de fondo, la institución carece de herramientas para interpretar si una inasistencia presencial a las aulas físicas de la Sede Centro o un parcial reprobado obedecen a un desinterés del alumno o a un colapso en el entorno vital del estudiante.
+A esto se suma una brecha técnica concreta. El sistema Adviser V.11 captura las notas oficiales, pero solo al cierre de cada corte \parencite{bersoft2024}. La plataforma RUSIA no integra los registros de entrega digital de Microsoft Teams. Las encuestas de Bienestar recogen datos socioeconómicos, pero estos no están conectados con las calificaciones \parencite{etitc_bienestar}. Cuando el sistema emite una alerta, el estudiante ya lleva semanas en riesgo sin que nadie lo haya notado.
+
+Una limitación adicional es que la institución no puede compartir los microdatos individuales de los estudiantes para entrenar modelos de inteligencia artificial, debido a las restricciones de la Ley 1581 de 2012 \parencite{ley1581}. Esto obliga a desarrollar y validar el sistema con datos sintéticos antes de conectarlo con información real anonimizada.
 
 \subsection{Pregunta problema}
-¿De qué manera la integración de variables de micro-caracterización socioeconómica y el rendimiento académico estructurado por cortes permite diseñar una arquitectura analítica predictiva que sea consistente para la detección temprana del riesgo de deserción en la jornada nocturna de la ETITC Sede Centro?
+¿De qué manera la integración de variables de caracterización socioeconómica con el rendimiento académico por cortes permite construir una arquitectura predictiva capaz de identificar de forma temprana el riesgo de deserción en la jornada nocturna de la ETITC Sede Centro?
 
 \newpage
 
+% ────────────────────────────── OBJETIVOS ────────────────────────────────
 \section{Objetivos}
-\textbf{Objetivo general:} \\
-Prototipar un modelo de analítica predictiva basado en Machine Learning y fuentes de datos relacionales para la detección temprana del riesgo de deserción en la jornada nocturna de la ETITC Sede Centro en Bogotá.
 
-\vspace{0.5cm}
-\textbf{Objetivos específicos:}
+\subsection*{Objetivo general}
+
+Prototipar y validar un modelo de analítica predictiva basado en \ML que integre datos de caracterización socioeconómica con el rendimiento académico por cortes, para la detección temprana del riesgo de deserción en la jornada nocturna de la ETITC Sede Centro en Bogotá.
+
+\subsection*{Objetivos específicos}
+
 \begin{enumerate}
-    \item Categorizar los factores de micro-caracterización socioeconómica y académica de mayor impacto en la persistencia estudiantil a partir de los registros históricos de los últimos 10 semestres de Bienestar Universitario.
-    \item Diseñar la arquitectura de datos relacional del sistema predictivo basada en la estructura de los tres cortes académicos institucionales para el procesamiento unificado de variables.
-    \item Validar la consistencia estructural de la arquitectura lógica mediante la simulación de un entorno controlado con datos sintéticos para la identificación de patrones de riesgo y la evaluación de los instrumentos de recolección.
+  \item Identificar los factores socioeconómicos y académicos de mayor peso en la deserción estudiantil nocturna, a partir del análisis comparado de los informes históricos de Bienestar Universitario de los últimos diez semestres \parencite{etitc_bienestar}, con el fin de establecer las variables de entrada del modelo.
+  \item Diseñar una arquitectura de datos relacional de tres fuentes independientes —caracterización socioeconómica, notas por corte y variable objetivo— que reproduzca la estructura fragmentada de los sistemas de información institucionales actuales, permitiendo integrar datos dispersos en un único conjunto de entrenamiento.
+  \item Evaluar la consistencia predictiva de la arquitectura mediante el entrenamiento de dos algoritmos supervisados (\RF y \XGB) sobre un conjunto de datos sintéticos de 1\,000 registros, generado con reglas de negocio calibradas a las distribuciones históricas de la institución, midiendo exactitud, sensibilidad y AUC-ROC como indicadores de desempeño.
 \end{enumerate}
 
 \newpage
 
+% ──────────────────────────── JUSTIFICACIÓN ──────────────────────────────
 \section{Justificación}
-\setstretch{1.4}
-La ejecución de este proyecto es fundamental para garantizar la equidad y la permanencia en la educación técnica nocturna. Socialmente, el estudiante de la nocturna de la ETITC representa a una población trabajadora con restricciones severas de tiempo y responsabilidades familiares, tal como lo muestran los informes de las encuestas de los últimos diez semestres \parencite{etitc2021i, etitc2021ii, etitc2022i, etitc2022ii, etitc2023i}\parencite{etitc2023ii, etitc2024i, etitc2024ii, etitc2025i, etitc2025ii}. La importancia de acudir a una simulación basada en reglas de negocio en esta etapa inicial de la investigación radica en la oportunidad de evaluar la calidad del instrumento de recolección actual de la universidad. Al simular las dinámicas de las respuestas, podemos identificar de forma anticipada qué preguntas de la encuesta de Bienestar no aportan valor explicativo, cuáles presentan fallas de información y qué variables críticas hacen falta por indagar en los formularios para optimizar las futuras estrategias de retención institucional, asegurando que la vulnerabilidad material no se traduzca en una exclusión académica inevitable \parencite{tinto1975}.
 
-Académicamente, el proyecto propone usar la trayectoria del rendimiento continuo como un sensor activo de compromiso estudiantil. La literatura internacional en minería de datos educativos demuestra que el cumplimiento y la regularidad en la entrega de tareas en un \LMS poseen un peso predictivo muy superior al simple acceso pasivo o descarga de contenidos de las plataformas virtuales \parencite{macfadyen2010}. De este modo, la evaluación del desempeño académico se desliga de la fotografía estática del final de semestre para convertirse en un registro dinámico y oportuno de la capacidad del estudiante para responder a las exigencias académicas del aula física de la Sede Centro, a pesar del desgaste provocado por la fatiga laboral diaria. Al procesar las marcas de tiempo y el estado de entrega, el sistema proyectado permitirá que los docentes identifiquen la pérdida de autorregulación antes de que se consolide una pérdida definitiva, abriendo paso a tutorías oportunas.
+Cada semestre, una parte significativa de los estudiantes nocturnos de ingeniería de la ETITC abandona sus estudios sin que la institución haya podido actuar a tiempo. Los informes de Bienestar Universitario muestran de forma consistente que la mayoría de estas personas combina una jornada laboral activa con las exigencias académicas nocturnas, lo que reduce el tiempo disponible para el trabajo autónomo y puede generar rezago progresivo \parencite{etitc_bienestar}. Esta situación no queda registrada en el sistema Adviser V.11 hasta que la nota de un parcial ya está reprobada, momento en que la intervención del equipo de Bienestar suele ser demasiado tardía. Construir un sistema que detecte señales de riesgo antes del cierre del primer corte no es solo una mejora tecnológica: es una respuesta de equidad hacia una población que combina trabajo, familia y estudio con recursos limitados. El \PDI 2025-2032 de la \ETITC estableció como meta reducir la deserción en 2,5 puntos porcentuales \parencite{etitc2025b}; sin una herramienta que actúe de manera preventiva, esa meta es difícil de alcanzar con la capacidad operativa actual del área de Bienestar. La presente investigación responde directamente a esa necesidad institucional desde un enfoque técnico.
 
-Desde una perspectiva técnica, el proyecto se alinea de forma directa con el \PDI 2025-2032 \parencite{etitc2025b}, el cual exige la reducción de la tasa de deserción institucional en 2,5 puntos porcentuales a través de la innovación y optimización de procesos internos. Al organizar la solución mediante tres archivos independientes conectados relacionalmente mediante el identificador del alumno, el prototipo imita la realidad de los sistemas de información actualmente fragmentados de la universidad. Esto permite proponer la construcción futura de un proceso de unificación de datos mediante un pipeline de \ETL que prepare metodológicamente a la institución para transitar de un modelo de retención reactivo a uno preventivo. La relevancia de este enfoque técnico radica en proveer una infraestructura de software flexible que sirva como puente de validación y simulación, facilitando a las directivas evaluar escenarios de riesgo sin poner en riesgo la privacidad de la comunidad académica.
+Desde el punto de vista técnico, el proyecto resuelve dos problemas al mismo tiempo. El primero es la ausencia de datos individuales reales disponibles para el entrenamiento del modelo, que se abordó generando 1\,000 registros sintéticos calibrados con las distribuciones históricas de la institución, lo que permitió validar el sistema sin exponer información confidencial \parencite{ley1581}. El segundo es la desconexión entre los tres sistemas de información de la universidad —Adviser, Microsoft Teams y las encuestas de Bienestar—, resuelta mediante una arquitectura relacional de tres archivos \CSV unidos por un identificador único de estudiante. Los resultados obtenidos confirman que la arquitectura funciona: el modelo \RF clasificó correctamente el 95,0\,\% de los casos, y el modelo \XGB identificó el 85,7\,\% de los estudiantes en riesgo. El análisis de importancia de variables reveló, además, que la autoevaluación y la coevaluación del Corte~3 son los predictores más informativos del modelo, superando incluso a la nota definitiva del mismo corte, lo que justifica incorporarlas de forma sistemática en los registros docentes e instrumentos de Bienestar.
 
 \newpage
 
+% ──────────────────────────── HIPÓTESIS ──────────────────────────────────
 \section{Hipótesis}
-Si se integran variables de micro-caracterización socioeconómica inicial y variables de rendimiento académico estructuradas por los tres cortes institucionales en una arquitectura de datos relacional simulada, entonces será posible validar la consistencia técnica del sistema predictivo y evaluar la capacidad del instrumento para identificar perfiles en riesgo con mayor precisión que los métodos actuales.
 
-\section{Metodología y Planificación del Modelo de Simulación}
-\textbf{Tipo de estudio:} Investigación aplicada, descriptiva-predictiva con enfoque cuantitativo apoyado en simulación estadística.\\
-\textbf{Herramientas conceptuales proyectadas:} Python (Pandas, Numpy), Modelado de datos relacionales, Algoritmos supervisados (XGBoost / Random Forest).
+La integración de variables de caracterización socioeconómica inicial con variables de rendimiento académico estructuradas por los tres cortes institucionales, en una arquitectura relacional de datos sintéticos, permite identificar patrones de riesgo de deserción con mayor precisión que los métodos de seguimiento actualmente disponibles en la ETITC.
 
-\subsection{Lógica Propuesta para el Algoritmo de Simulación (Reglas de Negocio)}
-Para que el prototipo adquiera validez científica y no dependa de suposiciones libres, la futura generación de los datos sintéticos se regirá por un modelo de simulación estructurado en Python basado en reglas lógicas y probabilidades condicionadas. Este script se calibrará estrictamente empleando los porcentajes macroscópicos extraídos de los informes de los últimos 10 semestres de la ETITC \parencite{etitc2021i, etitc2021ii, etitc2022i, etitc2022ii, etitc2023i}\parencite{etitc2023ii, etitc2024i, etitc2024ii, etitc2025i, etitc2025ii}:
+\newpage
 
-\begin{enumerate}
-    \item \textbf{Establecimiento de Porcentajes Base (Perfil Inicial):}
-    Cada variable del archivo \texttt{bienestar\_caracterizacion.csv} se programará respetando las proporciones reales históricas de la universidad: el $68\%$ de los registros se crearán artificialmente con la condición de trabajador activa ($1$) y el $45\%$ se generará reportando debilidades iniciales en matemáticas.
-    
-    \item \textbf{R1 — Presión laboral sobre inasistencias físicas y virtuales:}
-    El número de sesiones perdidas por corte (\texttt{inasistencias\_cX}) se modela como una variable entera continua en el rango $[0, 8]$ (punto medio entre las 5 sesiones de materias regulares y las 10 de materias intensivas como matemáticas). La distribución se condiciona al perfil laboral del estudiante:
-    \[ \textit{inasistencias\_cX} \sim \mathcal{N}_{\text{trunc}}\!\left(\mu_{\text{presión}},\, 1{,}2,\, [1,\,8]\right) \]
-    donde $\mu_{\text{presión}} \in \{3{,}0,\, 3{,}0,\, 4{,}0\}$ para los cortes 1, 2 y 3 respectivamente (la fatiga acumula en C3), y $\mu_{\text{normal}} \in \{0{,}8,\, 0{,}8,\, 1{,}0\}$ para el perfil sin presión. Cada sesión faltada descuenta $0{,}30$ puntos en la nota de la entrega de Teams del corte correspondiente.
+% ──────────────────────────── METODOLOGÍA ────────────────────────────────
+\section{Metodología}
 
-    \item \textbf{R2 — Riesgo cognitivo sobre notas de parciales:}
-    Las calificaciones de los parciales presenciales se generan como valores numéricos continuos en $[0{,}0;\, 5{,}0]$. Para los estudiantes con brecha de bachillerato superior a 3 años \textbf{y} debilidad autopercibida en matemáticas, el parcial se programa con media $2{,}2$, recreando el choque cognitivo en ciencias básicas. El resto recibe media $3{,}5$ (con presión laboral) o $4{,}2$ (sin presión).
+\subsection{Tipo y enfoque de investigación}
 
-    \item \textbf{R3 — Barrera tecnológica sobre entregas digitales en Teams:}
-    Los estudiantes que dependen exclusivamente de un teléfono celular con plan de datos limitado para el desarrollo de actividades de ingeniería reciben una penalización adicional de $-0{,}50$ en la nota de entrega de Teams de cada corte, independientemente de su asistencia presencial. Esta regla captura la brecha de acceso digital como una dimensión autónoma del riesgo académico.
+Esta investigación es de tipo \textbf{aplicada}, con enfoque \textbf{cuantitativo y carácter predictivo}. Se parte del análisis descriptivo de los datos históricos de la institución para construir un modelo matemático que clasifique a los estudiantes según su nivel de riesgo de abandono. Al no contar con microdatos reales disponibles, la investigación incluye una fase de \textbf{simulación estadística con reglas de negocio} como método de validación controlada, estrategia coherente con el nivel de madurez tecnológica TRL~3 en que se ubica actualmente el proyecto.
 
-    \item \textbf{R4 — Abandono tácito: desconexión total de la evaluación formativa:}
-    La variable objetivo \texttt{deserto} del archivo \texttt{registro\_admisiones\_target.csv} se deriva de dos condiciones: (a) el promedio de notas definitivas por corte es inferior a $3{,}0$, o (b) el estudiante registra cero en autoevaluación y coevaluación en los Cortes 2 o 3. La condición (b) se activa cuando el estudiante acumula 6 o más inasistencias en el corte (pérdida del $\geq 75\%$ de las sesiones), con una probabilidad creciente de $P \in \{0{,}50;\, 0{,}70;\, 0{,}90\}$ para C1, C2 y C3, simulando la deserción tardía progresiva.
-\end{enumerate}
+\subsection{Vigilancia tecnológica}
 
-\subsection{Procedimiento Proyectado de la Investigación}
+La vigilancia tecnológica es el proceso sistemático de identificar, analizar y aprovechar las tendencias tecnológicas relevantes en un campo, con el fin de orientar mejor las decisiones de desarrollo \parencite{escorsa2003}. Este concepto fue desarrollado en el ámbito de la gestión de la innovación empresarial por Pere Escorsa y Jaume Valls, investigadores de la Universidad Politécnica de Cataluña, cuya obra es referencia estándar en el campo de la vigilancia tecnológica en habla hispana. En este proyecto se aplicó su metodología para revisar los sistemas de alerta temprana existentes a nivel nacional e internacional, con los siguientes resultados:
+
 \begin{itemize}
-    \item \textbf{Fase 1: Configuración Conceptual de Variables:} Análisis del catálogo de preguntas de las encuestas de Bienestar de los últimos 10 semestres \parencite{etitc2021i, etitc2025ii} y definición de los componentes de la planilla docente (asistencia, Teams, parcial, autoevaluación y coevaluación).
-    \item \textbf{Fase 2: Arquitectura de Datos Multi-CSV (Por Ejecutar):} Programación futura del script en Python para crear los tres archivos independientes unificados por el \texttt{id\_estudiante}, simulando la infraestructura fragmentada de la ETITC.
-    \item \textbf{Fase 3: Ingeniería de Características (Por Ejecutar):} Implementación e inyección en el código de las reglas de negocio y condicionales explicados en el modelo de simulación.
-    \item \textbf{Fase 4: Validación del Prototipo (\TRL 2/3):} Ejecución del proceso de unión de datos (\ETL) y evaluación de la estructura del pipeline predictivo, dejando el cascarón técnico planteado y listo para recibir datos reales anonimizados en el futuro.
+  \item \textbf{SPADIES 3.0 (Colombia):} Sistema del Ministerio de Educación Nacional que calcula tasas de deserción a nivel institucional y nacional. Usa variables de matrícula y graduación, pero no integra datos de comportamiento académico continuo ni indicadores socioeconómicos individuales \parencite{men2025}.
+  \item \textbf{Adviser V.11 y RUSIA (ETITC):} Plataformas internas que registran calificaciones y datos de matrícula.\parencite{bersoft2024}.
+  \item \textbf{Herramientas internacionales de \EDM:} Investigaciones en minería de datos educativos demuestran que los modelos basados en registros de actividad continua en plataformas digitales —entregas de tareas, tiempos de respuesta, frecuencia de acceso— superan en capacidad predictiva a los modelos basados únicamente en calificaciones \parencite{macfadyen2010}. Sistemas comerciales como EAB Navigate y Civitas Learning en Estados Unidos aplican este enfoque, pero no están adaptados al contexto de la formación nocturna colombiana ni a la estructura de tres cortes institucionales.
+  \item \textbf{Oportunidad de potenciación:} La revisión de los sistemas documentados sugiere que ninguno de ellos integra de forma explícita la caracterización socioeconómica con el comportamiento académico continuo por corte en un único modelo predictivo. Esta observación —que podría revisarse con una búsqueda más exhaustiva— orientó el diseño de la arquitectura propuesta como un complemento que busca potenciar las capacidades ya existentes de Adviser y RUSIA, no reemplazarlas.
 \end{itemize}
 
+\subsection{Modelo TRL}
+
+La escala \TRL clasifica las tecnologías desde la idea básica (TRL~1) hasta el producto implementado y verificado en producción (TRL~9). La progresión del proyecto fue la siguiente:
+
+\begin{itemize}
+  \item \textbf{TRL~1 — Principios básicos observados:} Revisión de la literatura sobre \EDM y teoría de deserción; identificación de las variables relevantes en los informes de Bienestar \parencite{tinto1975, macfadyen2010}.
+  \item \textbf{TRL~2 — Concepto tecnológico formulado:} Diseño de la arquitectura de tres archivos \CSV, definición de las reglas de negocio y selección de los algoritmos (\RF y \XGB).
+  \item \textbf{TRL~3 — Demostración experimental (nivel actual):} Generación del conjunto de datos sintéticos, entrenamiento de los modelos y obtención de resultados cuantificables. El modelo \RF alcanzó exactitud del 95,0\,\% y AUC de 0,976; el modelo \XGB alcanzó sensibilidad del 85,7\,\%.
+  \item \textbf{TRL~4 (próximo paso):} Integración con datos reales anonimizados de la institución en un entorno de prueba controlado, sujeto a acuerdo formal con la Dirección de Bienestar Universitario.
+\end{itemize}
+
+\subsection{Reglas de negocio del simulador}
+
+Las reglas de negocio son las condiciones lógicas que determinaron cómo se generó cada registro sintético. Se calibraron con los promedios históricos de los informes de Bienestar \parencite{etitc_bienestar}.
+
+En la notación empleada, \textbf{R1 a R4} identifican cada regla de simulación (R = Regla). \textbf{C1, C2 y C3} corresponden al \textbf{Corte~1, Corte~2 y Corte~3}, que son los tres períodos de evaluación parcial que estructuran el semestre académico en la ETITC: el primero cubre aproximadamente las primeras cinco semanas, el segundo las semanas seis a diez, y el tercero las semanas once al cierre del semestre.
+
+\begin{enumerate}
+  \item \textbf{Perfil base:} El 68\,\% de los registros tienen la condición de trabajador activo. El 45\,\% reporta debilidad en matemáticas. La tasa de deserción simulada resultó del 17,6\,\%, coherente con el rango histórico de la institución.
+
+  \item \textbf{R1 — Presión laboral sobre asistencia:} Las inasistencias por corte se modelaron como una distribución normal truncada en el rango $[0,\, 8]$. Los estudiantes trabajadores reciben medias de $(3{,}0;\; 3{,}0;\; 4{,}0)$ para los cortes C1, C2 y C3, reflejando la fatiga acumulada hacia el final del semestre; los no trabajadores reciben medias de $(0{,}8;\; 0{,}8;\; 1{,}0)$.
+
+  \item \textbf{R2 — Riesgo cognitivo en parciales:} Los estudiantes con más de tres años fuera del colegio y debilidad en matemáticas reciben una calificación media de 2,2 en parciales de ciencias básicas. El resto recibe media 3,5 (con presión laboral) o 4,2 (sin presión).
+
+  \item \textbf{R3 — Barrera tecnológica en entregas digitales:} Los estudiantes que solo cuentan con un teléfono móvil como herramienta de trabajo reciben una penalización de $-0{,}5$ puntos en las entregas de Teams de cada corte, independientemente de su asistencia.
+
+  \item \textbf{R4 — Abandono tácito:} Un estudiante se marca como desertor (\texttt{deserto~=~1}) si su promedio de notas definitivas baja de 3,0, o si registra autoevaluación y coevaluación en cero durante los cortes 2 o 3. La probabilidad de activar esta condición es del 50\,\% en C1, 70\,\% en C2 y 90\,\% en C3, representando la deserción progresiva tardía.
+\end{enumerate}
+
+\subsection{Procedimiento paso a paso}
+
+\begin{enumerate}[label=\textbf{Fase \arabic*.}]
+  \item \textbf{Revisión documental y definición de variables:} Se analizaron los informes de Bienestar Universitario de los últimos diez semestres para extraer las distribuciones de las variables con mayor peso en la deserción \parencite{etitc_bienestar}. Se definieron 24 variables distribuidas en tres archivos: caracterización socioeconómica, notas por corte (parciales, Teams, autoevaluación, coevaluación e inasistencias) y variable objetivo.
+
+  \item \textbf{Generación de datos sintéticos:} Se programó un script en Python que aplicó las cuatro reglas de negocio para generar 1\,000 registros. El conjunto resultante tiene una tasa de deserción del 17,6\,\% (176 de 1\,000 estudiantes), coherente con los datos históricos.
+
+  \item \textbf{Ingeniería de características y unión relacional:} Los tres archivos se unieron mediante el campo \texttt{id\_estudiante} en un proceso \ETL. Se aplicó partición estratificada del conjunto de datos: 80\,\% entrenamiento (800 registros) y 20\,\% prueba (200 registros).
+
+  \item \textbf{Entrenamiento y evaluación de modelos:} Se entrenaron dos clasificadores: \RF y \XGB. Como el conjunto de datos tiene muchos más estudiantes sin deserción que con deserción (proporción aproximada de 5 a 1), se configuró el \XGB para que penalice más los casos no detectados que las alertas falsas; esto se logra con el parámetro \texttt{scale\_pos\_weight}~=~4,68, cuyo valor resulta de dividir el número de estudiantes sin deserción entre el número de desertores en el conjunto de entrenamiento \parencite{chen2016}. Los dos modelos se midieron con cinco indicadores: exactitud, precisión, sensibilidad, F1 y AUC-ROC. Al modelo con mejores resultados se le aplicó validación cruzada de cinco particiones (\textit{5-fold cross-validation}), que consiste en entrenar y evaluar el modelo cinco veces sobre subconjuntos distintos del conjunto de datos para confirmar que el resultado no depende de una única división favorable de los datos.
+\end{enumerate}
+
 \newpage
 
+% ──────────────────────────── MARCOS ─────────────────────────────────────
 \section{Marcos de investigación}
 
 \subsection{Marco conceptual}
-Para garantizar la comprensión del sistema analítico, se establecen las siguientes definiciones operacionales fundamentales dentro de la investigación:
+
+Los siguientes conceptos son fundamentales para entender el funcionamiento del sistema propuesto:
+
 \begin{itemize}
-    \item \textbf{Pobreza de Tiempo:} Restricción crítica y severa del número de horas disponibles que posee un estudiante para actividades de autoestudio, provocada por la superposición de una jornada laboral activa superior a las 37 horas semanales y responsabilidades familiares directas.
-    \item \textbf{Huella Digital Académica:} El rastro transaccional continuo y medible que genera un estudiante en las plataformas de soporte institucional, evaluado específicamente a través de la frecuencia de entrega de actividades y la latencia temporal respecto a las fechas de cierre del docente en Microsoft Teams.
-    \item \textbf{Deserción Temprana:} Abandono definitivo de las aulas presenciales y cese de interacción digital que ocurre de manera prematura antes de la consolidación de las notas oficiales del primer corte académico (Corte 1).
-    \item \textbf{Deserción Tardía:} Proceso de desvinculación o retiro institucional que se presenta en las fases de cierre del semestre (Cortes 2 y 3), detonado principalmente por la fatiga laboral acumulada y el rezago curricular en asignaturas bloqueantes de ciencias básicas.
-    \item \textbf{Datos Sintéticos Relacionales:} Conjunto de datos artificiales generados mediante un algoritmo de programación que replica las estructuras, formatos y correlaciones de una población real, permitiendo testear sistemas de software sin exponer información confidencial de carácter privado.
-    \item \textbf{Variables de Flujo Continuo:} Indicadores dinámicos que cambian su valor a lo largo del periodo académico (como el registro de asistencia o el cumplimiento de tareas), a diferencia de las variables estáticas que permanecen fijas (como el estrato).
+  \item \textbf{Pobreza de tiempo:} Escasez severa de horas disponibles para el autoestudio, causada por la superposición de una jornada laboral activa con las exigencias académicas nocturnas \parencite{arias2018}. En la ETITC, más del 52\,\% de los estudiantes nocturnos declara este problema de forma recurrente \parencite{etitc_bienestar}.
+
+  \item \textbf{Huella digital académica:} El rastro medible que genera un estudiante al interactuar con plataformas institucionales. En este proyecto se mide como la frecuencia y puntualidad de las entregas en Microsoft Teams por corte.
+
+  \item \textbf{Deserción temprana:} Abandono antes del cierre del primer corte académico.
+
+  \item \textbf{Deserción tardía:} Retiro silencioso que ocurre entre el segundo y el tercer corte, generalmente por acumulación de rezago y fatiga. Es la forma más frecuente entre los estudiantes nocturnos de la ETITC \parencite{etitc_bienestar}.
+
+  \item \textbf{Datos sintéticos relacionales:} Registros generados por un algoritmo que replica las distribuciones y correlaciones de una población real sin exponer información confidencial de individuos reales.
+
+  \item \textbf{Variable objetivo:} En \ML supervisado, la variable que el modelo aprende a predecir. En este proyecto es \texttt{deserto} (1 = desertó, 0 = continuó).
+
+  \item \textbf{Autoevaluación y coevaluación:} Notas de la componente cualitativa del sistema de evaluación institucional. En el análisis de importancia de variables, estas dos señales sumadas representaron el 20,7\,\% del poder predictivo del modelo, superando a la nota definitiva del Corte~3 (18,9\,\%).
+
+  \item \textbf{Falso negativo (FN):} Estudiante en riesgo que el modelo no identificó. En el contexto de la deserción estudiantil, un FN significa un caso que queda sin atención de Bienestar, lo cual tiene consecuencias directas sobre la retención.
+
+  \item \textbf{Falso positivo (FP):} Alerta emitida sobre un estudiante que en realidad no estaba en riesgo. Genera trabajo innecesario para el equipo de Bienestar.
 \end{itemize}
 
 \subsection{Marco teórico}
-La presente investigación se fundamenta científicamente en tres pilares teóricos complementarios que articulan el comportamiento humano, los factores de entorno y la ingeniería de datos:
+
+La investigación se fundamenta en tres corrientes teóricas que explican la deserción desde ángulos complementarios:
+
 \begin{enumerate}
-    \item \textbf{Teoría de la Integración Académica y Social:} Formulado por Vincent Tinto \parencite{tinto1975}, este modelo postula que la permanencia de un individuo en la educación superior es el resultado directo de su nivel de asimilación e interrelación con el sistema educativo. Tinto sostiene que el estudiante ingresa con características iniciales, pero es su interacción continua con las estructuras académicas y sociales lo que determina su nivel de compromiso institucional. En la jornada nocturna de la \ETITC, esta integración se ve afectada por factores que restringen el tiempo de interacción, provocando un desgaste que el sistema predictivo busca medir a través del flujo de notas cualitativas de autoevaluación y coevaluación como sensores activos de desconexión.
-    
-    \item \textbf{Paradigmas de la Minería de Datos Educativos (EDM):} Esta vertiente demuestra que el análisis de los registros de comportamiento continuo dentro de los entornos de aprendizaje virtuales constituye la herramienta más potente para anticipar el riesgo escolar. Siguiendo a Macfadyen y Dawson \parencite{macfadyen2010}, las variables asociadas a la acción directa del estudiante —tales como la entrega oportuna de talleres calificados and la regularidad en el cumplimiento de laboratorios virtuales en plataformas como Microsoft Teams— poseen un peso predictivo significativamente superior en los modelos de inteligencia artificial en comparación con las métricas tradicionales basadas únicamente en el conteo pasivo de accesos a la plataforma.
-    
-    \item \textbf{Modelos de Entorno y Variables Exógenas:} La literatura contemporánea en analítica predictiva demuestra que los modelos educativos ganan robustez cuando integran factores del contexto vital del alumno. \textcite{bernal2024} sustenta que la inclusión de variables exógenas (factores socioeconómicos y de entorno material externos al aula) genera un incremento del 14\% en la precisión de los algoritmos predictivos en comparación con modelos que solo evalúan el historial de calificaciones. Este enfoque justifica el cruce de las sábanas académicas con los indicadores de Bienestar para eliminar los puntos ciegos institucionales.
+  \item \textbf{Teoría de la integración académica y social:} \textcite{tinto1975} demostró que la permanencia de un estudiante en la educación superior depende de su grado de integración con las estructuras académicas y sociales de la institución. Cuando esa integración se debilita —por carga laboral, fatiga acumulada o rezago curricular— la deserción es una consecuencia previsible. Este modelo explica por qué las variables de autoevaluación y coevaluación resultaron ser los predictores más potentes: miden directamente el nivel de vinculación activa del estudiante con su entorno académico.
+
+  \item \textbf{Minería de datos educativos (\EDM):} Tal como lo plantean \textcite{romero2010}, la \EDM consiste en aplicar técnicas de análisis de datos para extraer patrones útiles de los entornos de aprendizaje. Dentro de este campo, \textcite{macfadyen2010} demostraron que los registros de actividad en plataformas \LMS —especialmente la entrega oportuna de tareas— tienen mayor poder predictivo que el simple acceso pasivo a materiales. Este hallazgo respalda la inclusión de las notas de Teams y los conteos de inasistencia como variables centrales del modelo propuesto.
+
+  \item \textbf{Algoritmos supervisados para clasificación:} Los dos modelos empleados tienen fundamentos teóricos bien establecidos. El \RF, propuesto por \textcite{breiman2001}, construye un conjunto de árboles de decisión independientes cuyas predicciones se combinan para reducir el sobreajuste y mejorar la estabilidad del resultado. El \XGB, desarrollado por \textcite{chen2016}, construye los árboles de forma secuencial: cada nuevo árbol corrige los errores del anterior. La ventaja del \XGB en este proyecto radica en el parámetro \texttt{scale\_pos\_weight}, que indica al modelo cuánto más grave es dejar pasar un desertor sin detectar que emitir una alerta incorrecta.
 \end{enumerate}
 
-Por su parte, el estudio integra la perspectiva de \textcite{arias2018} sobre la educación técnica industrial en el contexto colombiano, la cual sustenta que el conflicto trabajo-estudio es el predictor de mayor peso para explicar el rezago y la deserción en las jornadas nocturnas, actuando como una variable de entorno restrictiva que altera la maduración de las competencias del estudiante de ingeniería.
-
 \subsection{Marco normativo}
-El diseño de la arquitectura del prototipo se rige estrictamente bajo la legislación colombiana vigente en materia de seguridad de la información y derechos fundamentales:
+
+El diseño del sistema se rige por la legislación colombiana vigente en materia de protección de datos personales y uso de tecnologías:
+
 \begin{itemize}
-    \item \textbf{Ley Estatutaria 1581 de 2012 (Regulación de Habeas Data):} Dicta las disposiciones generales para la protección de datos personales. Debido a que el sistema predictivo procesa información altamente sensible relacionada con las calificaciones oficiales y condiciones socioeconómicas de Bienestar, la arquitectura técnica del prototipo implementa la anonimización completa mediante identificadores cifrados (\texttt{id\_estudiante}), asegurando que el pipeline de Machine Learning funcione en estricto cumplimiento normativo sin almacenar datos de identificación ciudadana directa.
-    \item \textbf{Decreto 1377 de 2013:} Reglamenta parcialmente la Ley 1581, orientando las políticas de tratamiento de datos y los esquemas de autorización que la institución debe desplegar en caso de una posterior alimentación del modelo con microdatos reales de la población estudiantil.
+  \item \textbf{Ley Estatutaria 1581 de 2012 \parencite{ley1581}:} Establece las reglas para el tratamiento de datos personales en Colombia. Por tratarse de información altamente sensible —calificaciones y condiciones socioeconómicas de estudiantes—, el prototipo opera con identificadores cifrados anonimizados (\texttt{id\_estudiante}) en lugar de nombres o documentos de identidad.
+
+  \item \textbf{Decreto 1377 de 2013 \parencite{decreto1377}:} Reglamenta parcialmente la Ley 1581. Define los esquemas de autorización y las políticas de tratamiento de datos que la institución deberá implementar cuando decida alimentar el modelo con información real de sus estudiantes.
+
+  \item \textbf{Ley 1341 de 2009 (Ley TIC) \parencite{ley1341}:} Promueve el acceso y uso de las tecnologías de la información para el desarrollo social. Respalda la pertinencia de construir herramientas de inteligencia artificial orientadas a la permanencia estudiantil en el contexto colombiano.
 \end{itemize}
 
-\newpage
 
+% ──────────────────────────── TIPOS DE DATOS ────────────────────────────
 \section{Tipos de datos}
-El sistema predictivo propuesto procesará tres categorías de datos bien delimitadas dentro de su estructura relacional:
+
+El sistema procesó cuatro categorías de datos distribuidas en los tres archivos \CSV relacionales:
+
 \begin{itemize}
-    \item \textbf{Datos Categóricos (Nominales y Ordinales):} Procedentes de la caracterización inicial a simular (categorías de tiempo desde el bachillerato de la pregunta 2, estrato basal e indicadores de la pregunta 16 sobre dispositivos tecnológicos) \parencite{etitc2025i}.
-    \item \textbf{Datos Numéricos (Continuos y Discretos):} Provenientes de las planillas docentes (calificaciones de tareas de Teams, parciales presenciales en la Sede Centro y notas de evaluación formativa en escala de 0.0 a 5.0).
-    \item \textbf{Datos Numéricos Discretos (adicionales):} El conteo de sesiones no asistidas por corte (\texttt{inasistencias\_cX}), con rango entero $[0,\, 8]$, reemplaza el indicador binario de asistencia para permitir una penalización continua y proporcional sobre las entregas de Teams.
-    \item \textbf{Datos Booleanos (Lógicos):} Indicadores binarios de verdadero/falso para la condición laboral activa (\texttt{trabaja}), la barrera tecnológica (\texttt{barrera\_tecnologica}) y la debilidad en matemáticas (\texttt{debilidad\_mate}).
+  \item \textbf{Datos categóricos nominales y ordinales:} Procedentes del archivo de caracterización: condición laboral (\texttt{trabaja}: sí/no), tiempo desde el bachillerato (\texttt{bachi\_tiempo}: menos de 1 año, de 1 a 3 años, más de 3 años), estrato socioeconómico (1 a 6) y tipo de dispositivo tecnológico disponible \parencite{etitc_bienestar}.
+
+  \item \textbf{Datos numéricos continuos:} Calificaciones de parciales presenciales, notas de entregas en Teams y notas de autoevaluación y coevaluación, todas en escala de 0,0 a 5,0.
+
+  \item \textbf{Datos numéricos discretos:} Conteo de sesiones no asistidas por corte (\texttt{inasistencias\_cX}), con rango entero $[0,\, 8]$, que permite capturar la presión laboral de manera proporcional en lugar de un simple indicador de presencia o ausencia.
+
+  \item \textbf{Datos booleanos:} Indicadores binarios para barrera tecnológica (\texttt{barrera\_tecnologica}), debilidad en matemáticas (\texttt{debilidad\_mate}) y la variable objetivo (\texttt{deserto}: 1 = abandonó, 0 = continuó).
 \end{itemize}
 
-\section{Plan de recolección de datos cuantitativos e instrumentos}
-El instrumento principal de recolección cuantitativa para el perfil inicial consistirá en el formulario estructurado de la encuesta de caracterización administrada históricamente por Bienestar Universitario al momento de la matrícula. Para el rendimiento académico continuo, el instrumento consistirá en la matriz de extracción técnica de sábanas de notas oficiales del sistema de información Adviser V.11 de la casa desarrolladora Bersoft \parencite{bersoft2024} y los registros de entrega en los canales de Microsoft Teams. Los datos cuantitativos se consolidarán al cierre de cada uno de los tres cortes institucionales.
+% ─────────────────── RECOLECCIÓN DE DATOS CUANTITATIVOS ─────────────────
+\section{Recolección de datos cuantitativos e instrumentos}
 
-\section{Plan de recolección de datos cualitativos}
-El componente cualitativo se capturará a través de las variables formalizadas de \textit{Autoevaluación} (la percepción del propio estudiante) y \textit{Coevaluación} (la valoración del docente y el equipo) establecidas en el reglamento estudiantil. Estas métricas cualitativas de autorregulación se transformarán a una escala numérica continua dentro de las planillas de calificaciones y servirán como un sensor directo del nivel de desconexión o compromiso del alumno antes de los exámenes finales.
+\subsection*{Instrumento principal: encuesta de caracterización}
+
+El instrumento de recolección cuantitativa es el formulario de caracterización estudiantil que aplica Bienestar Universitario al inicio de cada semestre \parencite{etitc_bienestar}. Este formulario recoge variables socioeconómicas como: condición laboral, tiempo de desvinculación académica desde el bachillerato, estrato, situación de vivienda, acceso a dispositivos tecnológicos y percepción de dificultades en ciencias básicas. Esta información constituye el archivo \texttt{bienestar\_caracterizacion.csv} de la arquitectura propuesta.
+
+\subsection*{Fuente complementaria: planillas de notas}
+
+Las calificaciones por corte se obtienen del sistema Adviser V.11 \parencite{bersoft2024}, que registra las notas de parciales presenciales al cierre de cada uno de los tres cortes institucionales. Las notas de entregas de actividades, de autoevaluación y de coevaluación se obtienen de los canales de la asignatura en Microsoft Teams. Estos datos conforman el archivo \texttt{adviser\_teams\_notas.csv}.
+
+\subsection*{Datos generados en esta fase}
+
+Al no contar con acceso a los microdatos reales, se generó un conjunto sintético de 1\,000 registros con 24 variables distribuidas en los tres archivos mencionados. La variable objetivo (\texttt{deserto}) se almacena en el archivo \texttt{registro\_admisiones\_target.csv}. La tasa de deserción resultante fue del 17,6\,\% (176 registros positivos de un total de 1\,000).
+
+% ──────────────────── RECOLECCIÓN DE DATOS CUALITATIVOS ─────────────────
+\section{Recolección de datos cualitativos}
+
+El componente cualitativo se captura a través de dos variables formalizadas en el sistema de evaluación institucional:
+
+\begin{itemize}
+  \item \textbf{Autoevaluación:} Nota que el propio estudiante asigna a su desempeño al cierre de cada corte.
+  \item \textbf{Coevaluación:} Nota asignada por los compañeros de equipo al trabajo colaborativo del estudiante.
+\end{itemize}
+
+Aunque son de naturaleza cualitativa —reflejan percepciones y compromisos—, ambas se expresan en la planilla docente como calificaciones numéricas en escala de 0,0 a 5,0, lo que permite incluirlas directamente en el modelo cuantitativo. Los resultados del análisis de importancia de variables confirmaron que la autoevaluación del Corte~3 es el segundo predictor más importante (13,1\,\%) y la coevaluación del mismo corte el sexto (7,6\,\%). Sumadas, representan el 20,7\,\% del poder predictivo del modelo, lo que valida su uso como sensores tempranos de desconexión académica.
 
 \newpage
 
-\section{Plan de análisis de resultados cuanti-cualitativos proyectado}
-Al tratarse de un anteproyecto, esta sección define la estrategia metodológica planificada para la posterior triangulación de los datos una vez que el script sea ejecutado. Se proyecta la aplicación de análisis descriptivos multivariados y matrices de correlación utilizando Python para evaluar de qué manera interactuarán las caídas en las notas cualitativas de autoevaluación con las variables cuantitativas de escasez de tiempo y recursos de los estudiantes nocturnos. El análisis planeado buscará validar estadísticamente si los índices de cumplimiento en Microsoft Teams actúan como un sensor predictivo capaz de reflejar pérdidas de regularidad académica de manera temprana, antes de que el rezago se consolide en el sistema Adviser V.11 de Bersoft \parencite{bersoft2024}.
+% ─────────────────── ANÁLISIS DE RESULTADOS ──────────────────────────────
+\section{Análisis de resultados cuanti-cualitativos}
 
+\subsection{Resultados del modelo Random Forest}
+
+El modelo \RF entrenado sobre el conjunto de datos sintéticos, con umbral de clasificación 0,5, obtuvo los siguientes resultados sobre el conjunto de prueba de 200 registros (35 desertores, 165 no desertores):
+
+\begin{itemize}
+  \item \textbf{Exactitud (Accuracy):} 95,0\,\% — el modelo clasificó correctamente 190 de 200 estudiantes.
+  \item \textbf{Precisión (Precision):} 100\,\% — ninguna de las alertas emitidas fue incorrecta.
+  \item \textbf{Sensibilidad (Recall):} 71,4\,\% — el modelo identificó 25 de los 35 estudiantes en riesgo.
+  \item \textbf{Puntaje F1:} 83,3\,\% — balance entre precisión y sensibilidad.
+  \item \textbf{Área bajo la curva ROC (AUC):} 0,976 — capacidad discriminativa muy alta. El AUC mide qué tan bien el modelo separa los estudiantes en riesgo de los que no lo están; su rango va de 0,5 (equivalente a adivinar al azar) a 1,0 (discriminación perfecta). Un valor de 0,976 significa que si se toman al azar un desertor y un no desertor del conjunto de prueba, el modelo asigna mayor probabilidad de deserción al desertor correcto en el 97,6\,\% de los casos.
+  \item \textbf{Falsos negativos (FN):} 10 — estudiantes en riesgo que el modelo no detectó.
+  \item \textbf{Falsos positivos (FP):} 0 — ninguna alerta incorrecta.
+\end{itemize}
+
+Al reducir el umbral de clasificación de 0,5 a 0,35, el modelo detecta 4 FN menos (pasa de 10 a 6 casos no detectados) a costa de 3 alertas incorrectas.
+
+\subsection{Resultados del modelo XGBoost}
+
+El modelo \XGB, entrenado con \texttt{scale\_pos\_weight}~=~4,68 para compensar el desequilibrio entre las clases, obtuvo los siguientes resultados con umbral 0,5 \parencite{chen2016}:
+
+\begin{itemize}
+  \item \textbf{Exactitud:} 95,5\,\%.
+  \item \textbf{Precisión:} 88,2\,\% — 4 de las 34 alertas emitidas fueron incorrectas.
+  \item \textbf{Sensibilidad:} 85,7\,\% — identificó 30 de los 35 estudiantes en riesgo.
+  \item \textbf{Puntaje F1:} 87,0\,\%.
+  \item \textbf{AUC-ROC:} 0,973.
+  \item \textbf{FN:} 5 — reduce a la mitad los casos no detectados respecto al RF.
+  \item \textbf{FP:} 4 — cuatro alertas incorrectas por cada 200 estudiantes.
+\end{itemize}
+
+\subsection{Importancia de variables}
+
+Las diez variables de mayor peso predictivo en el modelo \RF, ordenadas de mayor a menor, fueron:
+
+\begin{enumerate}
+  \item Nota definitiva Corte~3: 18,9\,\%
+  \item Autoevaluación Corte~3: 13,1\,\%
+  \item Nota definitiva Corte~2: 10,6\,\%
+  \item Inasistencias Corte~3: 8,9\,\%
+  \item Nota definitiva Corte~1: 7,8\,\%
+  \item Coevaluación Corte~3: 7,6\,\%
+  \item Parcial Corte~2: 5,3\,\%
+  \item Parcial Corte~1: 4,6\,\%
+  \item Notas Teams Corte~3: 4,5\,\%
+  \item Parcial Corte~3: 3,7\,\%
+\end{enumerate}
+
+El hallazgo más relevante es que la autoevaluación y la coevaluación del Corte~3 sumadas aportan el 20,7\,\% del poder predictivo del modelo, superando a la nota definitiva del mismo corte.
+
+\newpage
+
+% ──────────────────── PROPUESTA DE PROTOTIPO Y TRL ───────────────────────
 \section{Propuesta de prototipo basado en análisis y modelo TRL}
-De acuerdo con las restricciones actuales de acceso a datos individuales reales de la universidad, el diseño de este prototipo se ubica estrictamente en la fase de \textbf{TRL 2 (Formulación del Concepto Tecnológico)}. 
 
-La solución técnica plantea una arquitectura relacional conceptual dividida en tres archivos independientes (\texttt{bienestar\_caracterizacion.csv}, \texttt{adviser\_teams\_notas.csv} y \texttt{registro\_admisiones\_target.csv}) unificados mediante un proceso \ETL. El alcance de esta propuesta tecnológica se centra en demostrar que la programación futura de las reglas de negocio lógicas permitirá validar la consistencia técnica del pipeline de Machine Learning (XGBoost / Random Forest), proveyendo una herramienta para auditar el cuestionario actual de Bienestar e identificar qué dimensiones informativas hacen falta para optimizar la recolección institucional.
+El prototipo desarrollado se ubica actualmente en \textbf{TRL~3}, nivel que corresponde a la demostración experimental de la función la tecnología. La arquitectura técnica consiste en tres archivos \CSV relacionales unificados mediante un proceso \ETL programado en Python:
 
-\section{Resultados y conclusiones esperadas}
-De forma coherente con la fase de anteproyecto, se formulan las conclusiones proyectadas que la investigación planea validar al término de su fase experimental:
 \begin{itemize}
-    \item La viabilidad técnica de la arquitectura relacional Multi-CSV para emular de forma consistente la estructura de los sistemas fragmentados de la \ETITC.
-    \item La consistencia metodológica de recurrir a la simulación por reglas lógicas como un paso de ingeniería válido para testear software predictivo sin exponer microdatos confidenciales.
-    \item La capacidad de las variables cualitativas de autoevaluación y entrega en Teams para operar como sensores de alerta temprana eficaces.
+  \item \texttt{bienestar\_caracterizacion.csv}: Perfil socioeconómico inicial (condición laboral, estrato, tiempo desde el bachillerato, barrera tecnológica, debilidad en matemáticas).
+  \item \texttt{adviser\_teams\_notas.csv}: Rendimiento académico continuo — parciales, entregas de Teams, autoevaluación, coevaluación e inasistencias para cada uno de los tres cortes.
+  \item \texttt{registro\_admisiones\_target.csv}: Variable objetivo (\texttt{deserto}), derivada aplicando las reglas de negocio sobre los archivos anteriores.
 \end{itemize}
 
-\section{Lineamientos proyectados para la discusión futura}
-La futura discusión se planifica como un espacio crítico para comparar los alcances teóricos de esta arquitectura predictiva frente a las herramientas rígidas vigentes (Adviser V.11 y la plataforma RUSIA) \parencite{bersoft2024}. Los lineamientos del debate se centrarán en evaluar la brecha metodológica existente entre los datos de simulación lógica y el comportamiento humano real, analizando las limitaciones del modelo, la viabilidad de trasladar la arquitectura hacia la jornada diurna y las estrategias para conectar las alertas automáticas con los canales de atención de Bienestar Universitario para soportar la meta del Plan de Desarrollo.
+El flujo de procesamiento (\textit{pipeline}) de \ML fue implementado en Python con las librerías \textit{Scikit-learn} y \textit{XGBoost}. Un \textit{pipeline} es una secuencia automatizada de pasos de transformación y modelado encadenados, de modo que los datos pasan de un paso al siguiente sin intervención manual entre etapas, reduciendo errores y facilitando la reproducibilidad. La arquitectura del script se organiza en cuatro módulos:
+
+\begin{enumerate}
+  \item \textbf{Carga y unión relacional:} Los tres archivos \CSV se cargan con la librería \textit{pandas} y se integran mediante el campo \texttt{id\_estudiante}, que actúa como llave foránea entre los tres conjuntos de datos, siguiendo el modelo relacional descrito en la sección anterior.
+  \item \textbf{Preprocesamiento:} Las variables numéricas se escalan al rango $[0,\,1]$ (\texttt{MinMaxScaler}) para que ninguna variable domine al modelo por su magnitud; las variables categóricas (como condición laboral o tiempo de desvinculación desde el bachillerato) se convierten a valores numéricos (\texttt{OrdinalEncoder}).
+  \item \textbf{Entrenamiento y evaluación:} Se entrena primero el \RF y luego el \XGB con los parámetros descritos. Cada modelo se evalúa sobre el 20\,\% de datos reservados para prueba (200 registros).
+  \item \textbf{Análisis de importancia de variables:} Se extrae el atributo \texttt{feature\_importances\_} del modelo ganador, que indica qué porcentaje del poder predictivo aportó cada variable al resultado final.
+\end{enumerate}
+
+Los resultados obtenidos confirman la viabilidad técnica de la arquitectura.
+
+\textbf{Hoja de ruta hacia TRL~4:}
+\begin{enumerate}
+  \item Ajustar el umbral del modelo \RF a 0,35 para reducir los casos no detectados de 10 a 6, con un costo de 3 alertas incorrectas adicionales.
+  \item Obtener el aval formal de la Dirección de Bienestar Universitario y la Facultad de Sistemas para una prueba piloto con datos reales anonimizados.
+  \item Validar el modelo entrenado sobre datos sintéticos con información real de al menos dos semestres, para verificar que la precisión se mantiene fuera del entorno simulado.
+  \item Diseñar una interfaz de alertas para el personal de Bienestar que explique, por cada estudiante en riesgo, cuáles son las variables críticas que activaron la alerta.
+\end{enumerate}
 
 \newpage
-\printbibliography[title={Referencias}]
+
+% ──────────────────────────── CONCLUSIONES ───────────────────────────────
+\section{Conclusiones}
+
+\begin{enumerate}
+  \item La arquitectura relacional de tres fuentes (\CSV de caracterización, notas por corte y variable objetivo) demostró ser técnicamente viable para replicar la estructura fragmentada de los sistemas de información de la ETITC y entrenar clasificadores de \ML con datos calibrados a las distribuciones históricas de la institución \parencite{etitc_bienestar}.
+
+  \item El modelo \RF alcanzó una exactitud del 95,0\,\% y un AUC de 0,976 sobre los datos sintéticos, sin generar ninguna alerta incorrecta. El modelo \XGB mejoró la detección de estudiantes en riesgo (sensibilidad del 85,7\,\% frente al 71,4\,\% del RF), a costa de cuatro alertas incorrectas por cada 200 estudiantes evaluados. Esta diferencia es operacionalmente relevante: para una cohorte de 500 estudiantes nocturnos, el XGB dejaría sin identificar aproximadamente la mitad de los casos que el RF no detecta.
+
+  \item La autoevaluación y la coevaluación del Corte~3 sumadas representaron el 20,7\,\% del peso predictivo total del modelo, superando a la nota definitiva del mismo corte (18,9\,\%). Este hallazgo tiene una implicación directa para la práctica institucional: incorporar estas variables de forma sistemática en los registros docentes puede incrementar la capacidad de detección temprana incluso antes de que las notas finales queden consolidadas.
+
+  \item El enfoque de simulación con reglas de negocio calibradas a datos históricos demostró ser un método válido para desarrollar y probar sistemas de \ML en entornos educativos donde los microdatos individuales no están disponibles por restricciones normativas \parencite{ley1581}. Esto abre una ruta metodológica replicable para otras instituciones colombianas en la misma situación.
+\end{enumerate}
+
+% ──────────────────────────── DISCUSIÓN ──────────────────────────────────
+\section{Discusión}
+
+Los resultados obtenidos son coherentes con la teoría de integración académica de \textcite{tinto1975}: las variables que mejor predicen la deserción no son las notas finales, sino los indicadores de desconexión progresiva —autoevaluación baja, inasistencias acumuladas, abandono de las entregas de Teams— que preceden al fracaso académico oficial semanas antes del cierre del corte. Esto confirma que el sistema propuesto actúa en el momento adecuado: antes, no después.
+
+Sin embargo, es necesario reconocer las limitaciones del estudio. Los datos sobre los que se validó el modelo son sintéticos y fueron generados por el mismo equipo de investigación. Aunque las reglas de negocio se calibraron con los informes históricos de Bienestar \parencite{etitc_bienestar}, no es posible garantizar que todos los patrones del comportamiento humano real estén representados en la simulación. La deserción real responde también a eventos imprevistos —pérdida de empleo, enfermedad, cambio de ciudad— que las reglas lógicas no modelan de forma completa. Esta limitación es inherente a la fase TRL~3 y se resuelve en la fase TRL~4 al incorporar datos reales.
+
+La comparación entre \RF y \XGB arroja una conclusión operativa clara. El \RF es preferible cuando la institución prioriza la ausencia de falsas alarmas, para no sobrecargar al equipo de Bienestar con casos innecesarios. El \XGB es preferible cuando la prioridad es no dejar pasar ningún estudiante en riesgo.
+
+Frente al estado actual de las herramientas institucionales —Adviser V.11 y RUSIA—, que no generan ningún tipo de alerta predictiva automatizada \parencite{bersoft2024}, la brecha de valor que aportaría este sistema es significativa. El paso siguiente es obtener el respaldo institucional necesario para realizar una prueba piloto con datos reales, lo que llevaría el proyecto al nivel TRL~4 y permitiría cuantificar el impacto real sobre la retención estudiantil en la jornada nocturna.
+
+\newpage
+\printbibliography[title={Referencias bibliográficas}]
 
 \end{document}

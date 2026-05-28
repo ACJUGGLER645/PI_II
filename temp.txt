@@ -1,0 +1,18 @@
+hagamos lo siguiente ajustar las siguientes actividades y responder las preguntas:
+- en los objetivos especificos solo dejar un verbo y el resto dejarlo como complementos del mismo ya que si los quitamos pierde sentido la idea principal
+- en la justificacion no afirmemos que estan desenchufados
+- mantengamos la hipotesis anterior y hablaremos de ella en las conclusiones o discusiones no tenemos que plantear de esa forma la estructura del documento
+- explica que es Escorsa, P., & Valls, J. (2003). Tecnología e innovación en la empresa (2.a ed.). Edicions UPC. ,,m 
+- cambiar la brecha idnetificada en la seccion de vigilancia tencnologica es mejor mencionar o sugerir que podria potenciarlo no podemos afirmar que no hay sin haber investigfaddo todo
+- explica esto R1 — Presión laboral sobre asistencia: Las inasistencias por corte se modelaron como una
+distribución normal truncada en el rango [0, 8]. Los estudiantes trabajadores reciben medias
+de (3,0; 3,0; 4,0) para los cortes C1, C2 y C3, reflejando la fatiga acumulada hacia el final
+del semestre; los no trabajadores reciben medias de (0,8; 0,8; 1,0).
+y que es R1, C1 y el resto
+- que es "scale_pos_weight = 4,68, equivalente a la razón entre la cantidad de no desertores
+y desertores) para compensar el desequilibrio de clases (Chen & Guestrin, 2016). Ambos
+modelos se evaluaron con exactitud, precisión, sensibilidad (Recall), F1 y AUC-ROC, y se
+aplicó validación cruzada con k = 5 pliegues al modelo ganador." el parrafo de entreamiento y evaluacion de modelos es extraño debe de ser mas sencillo
+- que es Área bajo la curva ROC (AUC): 0,976 — capacidad discriminativa muy alta.
+- explicar que es pipeline
+- explicar que arquitectura se uso con el script
